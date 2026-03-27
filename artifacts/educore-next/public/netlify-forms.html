@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head><title>Netlify Form Detection</title></head>
+  <body>
+    <!--
+      Netlify form detection for Next.js (App Router).
+      Next.js does not have a static index.html, so Netlify cannot
+      auto-detect forms from JSX. This file in /public tells Netlify
+      about all forms at build time.
+    -->
+
+    <!-- Lead Capture / Demo Request form -->
+    <form name="educore-demo-request" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text"  name="name" />
+      <input type="tel"   name="phone" />
+      <input type="text"  name="institute_type" />
+    </form>
+
+  </body>
+</html>

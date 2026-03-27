@@ -1,1 +1,188 @@
-{"version":3,"caseSensitive":false,"basePath":"","rewrites":{"beforeFiles":[],"afterFiles":[],"fallback":[]},"redirects":[{"source":"/:path+/","destination":"/:path+","permanent":true,"internal":true,"regex":"^(?:\\/((?:[^\\/]+?)(?:\\/(?:[^\\/]+?))*))\\/$"}],"headers":[]}
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/student/video/[id]",
+      "regex": "^/student/video/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/student/video/(?<nxtPid>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/login",
+      "regex": "^/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/login(?:/)?$"
+    },
+    {
+      "page": "/management/attendance",
+      "regex": "^/management/attendance(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/management/attendance(?:/)?$"
+    },
+    {
+      "page": "/management/dashboard",
+      "regex": "^/management/dashboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/management/dashboard(?:/)?$"
+    },
+    {
+      "page": "/management/fees",
+      "regex": "^/management/fees(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/management/fees(?:/)?$"
+    },
+    {
+      "page": "/management/notifications",
+      "regex": "^/management/notifications(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/management/notifications(?:/)?$"
+    },
+    {
+      "page": "/management/reports",
+      "regex": "^/management/reports(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/management/reports(?:/)?$"
+    },
+    {
+      "page": "/management/students",
+      "regex": "^/management/students(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/management/students(?:/)?$"
+    },
+    {
+      "page": "/opengraph-image",
+      "regex": "^/opengraph\\-image(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/opengraph\\-image(?:/)?$"
+    },
+    {
+      "page": "/student/analytics",
+      "regex": "^/student/analytics(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/student/analytics(?:/)?$"
+    },
+    {
+      "page": "/student/dashboard",
+      "regex": "^/student/dashboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/student/dashboard(?:/)?$"
+    },
+    {
+      "page": "/student/doubts",
+      "regex": "^/student/doubts(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/student/doubts(?:/)?$"
+    },
+    {
+      "page": "/student/study-mate",
+      "regex": "^/student/study\\-mate(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/student/study\\-mate(?:/)?$"
+    },
+    {
+      "page": "/student/tests",
+      "regex": "^/student/tests(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/student/tests(?:/)?$"
+    },
+    {
+      "page": "/student/video",
+      "regex": "^/student/video(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/student/video(?:/)?$"
+    },
+    {
+      "page": "/teacher/analytics",
+      "regex": "^/teacher/analytics(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/teacher/analytics(?:/)?$"
+    },
+    {
+      "page": "/teacher/dashboard",
+      "regex": "^/teacher/dashboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/teacher/dashboard(?:/)?$"
+    },
+    {
+      "page": "/teacher/doubts",
+      "regex": "^/teacher/doubts(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/teacher/doubts(?:/)?$"
+    },
+    {
+      "page": "/teacher/live",
+      "regex": "^/teacher/live(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/teacher/live(?:/)?$"
+    },
+    {
+      "page": "/teacher/students",
+      "regex": "^/teacher/students(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/teacher/students(?:/)?$"
+    },
+    {
+      "page": "/teacher/tests",
+      "regex": "^/teacher/tests(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/teacher/tests(?:/)?$"
+    },
+    {
+      "page": "/twitter-image",
+      "regex": "^/twitter\\-image(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/twitter\\-image(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

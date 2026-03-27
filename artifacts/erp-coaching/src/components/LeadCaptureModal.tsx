@@ -31,6 +31,7 @@ export default function LeadCaptureModal() {
       const t = setTimeout(() => setShow(true), 3000);
       return () => clearTimeout(t);
     }
+    return undefined;
   }, []);
 
   function dismiss() {

@@ -173,6 +173,133 @@ const Icon = ({ name, className = "" }: { name: string; className?: string }) =>
   <i className={`bi bi-${name} ${className}`} />
 )
 
+// Reusable horizontal scroll row — auto-scrolls on mobile, normal grid on desktop
+function HScrollRow({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={`-mx-6 px-6 overflow-x-auto scrollbar-hide md:overflow-visible md:mx-0 md:px-0 ${className}`}>
+      <div className="flex gap-4 w-max md:w-auto md:flex-wrap md:grid-none">
+        {children}
+      </div>
+    </div>
+  )
+}
+
+const testimonials = [
+  { name: 'Rahul Sharma', role: 'Director, Apex IIT Academy, Delhi', avatar: 'RS', color: 'bg-blue-600', rating: 5, text: 'EduCore transformed how we operate. Fee collection is now fully automated, and parents get real-time updates. We saved 40 hours/month on admin work.' },
+  { name: 'Priya Patel', role: 'Founder, Spark Learning Center, Surat', avatar: 'PP', color: 'bg-violet-600', rating: 5, text: 'The doubt-solving module is a game changer. Students get answers within 10 minutes, and our retention rate improved by 35% in just 3 months.' },
+  { name: 'Vikram Singh', role: 'Principal, Success Point, Jaipur', avatar: 'VS', color: 'bg-emerald-600', rating: 5, text: 'Switching to EduCore was the best decision. Live classes, mock tests, analytics — everything is seamlessly connected. Highly recommended!' },
+  { name: 'Anita Desai', role: 'Head, Momentum Coaching, Pune', avatar: 'AD', color: 'bg-orange-600', rating: 5, text: 'Our teachers love how easy it is to upload content and manage doubts. Student engagement improved dramatically. EduCore simply works.' },
+  { name: 'Suresh Kumar', role: 'Owner, Bright Future School, Lucknow', avatar: 'SK', color: 'bg-rose-600', rating: 5, text: 'Managing 1200 students was a nightmare before EduCore. Now everything — attendance, fees, results — is on one screen. Absolutely brilliant.' },
+  { name: 'Meena Joshi', role: 'Director, Excel Academy, Nagpur', avatar: 'MJ', color: 'bg-indigo-600', rating: 5, text: 'The fee reminder automation alone saved us ₹2L in pending dues last month. The ROI is incredible. Every coaching center needs this.' },
+  { name: 'Arjun Nair', role: 'Founder, TopRank Institute, Kochi', avatar: 'AN', color: 'bg-teal-600', rating: 5, text: 'Parents love the real-time updates. Teachers love the doubt system. Management loves the analytics. EduCore is a win for everyone.' },
+  { name: 'Deepa Verma', role: 'Principal, Sunrise CBSE School, Bhopal', avatar: 'DV', color: 'bg-pink-600', rating: 5, text: 'We moved from 3 different software tools to just EduCore. The consolidation alone saved us ₹80,000 per year. Exceptional product.' },
+]
+
+function TestimonialStrip() {
+  const trackRef = React.useRef<HTMLDivElement>(null)
+  const animRef = React.useRef<number>(0)
+  const posRef = React.useRef(0)
+  const isDragging = React.useRef(false)
+  const dragStartX = React.useRef(0)
+  const dragStartPos = React.useRef(0)
+  const isPaused = React.useRef(false)
+
+  const SPEED = 0.5
+  const doubled = [...testimonials, ...testimonials]
+
+  React.useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+    const halfWidth = track.scrollWidth / 2
+
+    const tick = () => {
+      if (!isPaused.current) {
+        posRef.current += SPEED
+        if (posRef.current >= halfWidth) posRef.current = 0
+        track.style.transform = `translateX(-${posRef.current}px)`
+      }
+      animRef.current = requestAnimationFrame(tick)
+    }
+    animRef.current = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(animRef.current)
+  }, [])
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    isDragging.current = true
+    isPaused.current = true
+    dragStartX.current = e.clientX
+    dragStartPos.current = posRef.current
+  }
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current) return
+    const delta = dragStartX.current - e.clientX
+    const track = trackRef.current
+    if (!track) return
+    const halfWidth = track.scrollWidth / 2
+    posRef.current = Math.max(0, Math.min(dragStartPos.current + delta, halfWidth - 1))
+    track.style.transform = `translateX(-${posRef.current}px)`
+  }
+  const onMouseUp = () => { isDragging.current = false; isPaused.current = false }
+  const onTouchStart = (e: React.TouchEvent) => {
+    isPaused.current = true
+    dragStartX.current = e.touches[0].clientX
+    dragStartPos.current = posRef.current
+  }
+  const onTouchMove = (e: React.TouchEvent) => {
+    const delta = dragStartX.current - e.touches[0].clientX
+    const track = trackRef.current
+    if (!track) return
+    const halfWidth = track.scrollWidth / 2
+    posRef.current = Math.max(0, Math.min(dragStartPos.current + delta, halfWidth - 1))
+    track.style.transform = `translateX(-${posRef.current}px)`
+  }
+  const onTouchEnd = () => { isPaused.current = false }
+
+  return (
+    <section className="py-16 bg-white border-y border-slate-100 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 mb-10 text-center">
+        <p className="text-[10px] font-extrabold uppercase tracking-[0.4em] text-primary-600 mb-2">Trusted Across India</p>
+        <h2 className="text-3xl font-extrabold text-slate-900">What Institutes Are Saying</h2>
+      </div>
+      <div
+        className="overflow-hidden cursor-grab active:cursor-grabbing select-none"
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseUp}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        <div ref={trackRef} className="flex gap-5 w-max will-change-transform">
+          {doubled.map((t, i) => (
+            <div
+              key={i}
+              className="w-[320px] flex-shrink-0 bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:border-primary-100 transition-all"
+            >
+              <div className="flex gap-0.5 mb-3">
+                {Array.from({ length: t.rating }).map((_, j) => (
+                  <i key={j} className="bi bi-star-fill text-amber-400 text-xs" />
+                ))}
+              </div>
+              <p className="text-sm font-bold text-slate-600 leading-relaxed mb-5 italic line-clamp-3">&ldquo;{t.text}&rdquo;</p>
+              <div className="flex items-center gap-3 pt-4 border-t border-slate-50">
+                <div className={`w-9 h-9 ${t.color} rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0`}>
+                  {t.avatar}
+                </div>
+                <div>
+                  <p className="text-xs font-extrabold text-slate-900">{t.name}</p>
+                  <p className="text-[10px] font-bold text-slate-400 leading-tight">{t.role}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function LandingPage() {
   const [scrolled, setScrolled] = useState(false)
   const [activeRole, setActiveRole] = useState<'student' | 'teacher' | 'management'>('student')
@@ -211,9 +338,10 @@ export default function LandingPage() {
                   <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Trusted by 500+ Institutes</span>
               </div>
               
-              <h1 className="text-5xl lg:text-[70px] font-black text-slate-950 tracking-tight mb-8 leading-[1.05]">
-                Run Your Entire School or<br />
-                Coaching Institute on One<br />
+              <h1 className="text-4xl lg:text-[52px] font-black text-slate-950 tracking-tight mb-8 leading-[1.1]">
+                Run Your Entire{' '}
+                <span className="text-emerald-500">School</span> or<br />
+                <span className="text-orange-500">Coaching Institute</span> on One<br />
                 <span className="text-primary-600">Smart Platform.</span>
               </h1>
               
@@ -221,23 +349,33 @@ export default function LandingPage() {
                 Students, Teachers & Management — Together on the only OS built for high-performance Bharat.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center gap-4 mb-12">
+              <div className="flex flex-col sm:flex-row flex-wrap items-center gap-3 mb-12">
                 <motion.div
-                  animate={{ scale: [1, 1.05, 1] }}
+                  animate={{ scale: [1, 1.04, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="w-full sm:w-auto"
                 >
-                  <Link 
-                    href="https://wa.me/919506933715" 
-                    className="group relative w-full sm:w-auto px-10 py-5 bg-primary-600 text-white font-extrabold uppercase tracking-[0.2em] text-[11px] rounded-2xl shadow-[0_20px_40px_rgba(37,99,235,0.3)] hover:shadow-primary-500/50 hover:bg-primary-500 transition-all flex items-center justify-center gap-3 overflow-hidden"
+                  <Link
+                    href="/login"
+                    className="group relative px-7 py-4 bg-slate-900 text-white font-extrabold uppercase tracking-[0.18em] text-[10px] rounded-2xl shadow-xl hover:bg-primary-600 transition-all flex items-center gap-2.5 overflow-hidden"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                    <Icon name="play-circle-fill" className="text-xl" /> 
-                    <span>Get Live Demo Now</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                    <Icon name="speedometer2" className="text-base" />
+                    Admin Demo
                   </Link>
                 </motion.div>
-                <Link href="https://wa.me/919506933715" className="w-full sm:w-auto px-8 py-5 bg-white border-2 border-slate-100 text-slate-900 font-extrabold uppercase tracking-[0.2em] text-[10px] rounded-2xl hover:border-primary-100 hover:shadow-xl transition-all flex items-center justify-center gap-2">
-                  <Icon name="whatsapp" className="text-emerald-500 text-lg" /> Custom Quote
+                <Link
+                  href="/login"
+                  className="px-7 py-4 bg-primary-600 text-white font-extrabold uppercase tracking-[0.18em] text-[10px] rounded-2xl shadow-xl hover:bg-primary-700 transition-all flex items-center gap-2.5"
+                >
+                  <Icon name="person-workspace" className="text-base" />
+                  Teacher Demo
+                </Link>
+                <Link
+                  href="/login"
+                  className="px-7 py-4 bg-blue-600 text-white font-extrabold uppercase tracking-[0.18em] text-[10px] rounded-2xl shadow-xl hover:bg-blue-700 transition-all flex items-center gap-2.5"
+                >
+                  <Icon name="mortarboard" className="text-base" />
+                  Student Demo
                 </Link>
               </div>
 
@@ -289,26 +427,31 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Auto-Scroll Testimonial Strip ── */}
+      <TestimonialStrip />
+
       {/* 🏙️ Schools Recognition Strip */}
-      <div className="py-6 bg-slate-900 border-y border-white/5 overflow-hidden">
-         <div className="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0">
-            <div className="flex items-center gap-3">
-               <Icon name="building-check" className="text-white text-xl" />
-               <span className="text-[10px] font-bold text-white uppercase tracking-widest">K-12 Schools</span>
+      <div className="py-5 bg-slate-900 border-y border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="overflow-x-auto scrollbar-hide px-6">
+            <div className="flex items-center gap-8 md:gap-16 w-max md:w-auto md:justify-center mx-auto opacity-60 hover:opacity-100 transition-opacity">
+              {[
+                { icon: 'building-check', label: 'K-12 Schools' },
+                { icon: 'book-half', label: 'Global Coaching Brands' },
+                { icon: 'award', label: 'Edu-Foundations' },
+                { icon: 'mortarboard', label: 'Training Centers' },
+                { icon: 'laptop', label: 'Online Educators' },
+                { icon: 'people-fill', label: 'Tuition Centers' },
+                { icon: 'clipboard-check', label: 'Test Series Platforms' },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-2.5 flex-shrink-0">
+                  <Icon name={item.icon} className="text-white text-lg" />
+                  <span className="text-[10px] font-bold text-white uppercase tracking-widest whitespace-nowrap">{item.label}</span>
+                </div>
+              ))}
             </div>
-            <div className="flex items-center gap-3">
-               <Icon name="book-half" className="text-white text-xl" />
-               <span className="text-[10px] font-bold text-white uppercase tracking-widest">Global Coaching Brands</span>
-            </div>
-            <div className="flex items-center gap-3">
-               <Icon name="award" className="text-white text-xl" />
-               <span className="text-[10px] font-bold text-white uppercase tracking-widest">Edu-Foundations</span>
-            </div>
-            <div className="flex items-center gap-3">
-               <Icon name="mortarboard" className="text-white text-xl" />
-               <span className="text-[10px] font-bold text-white uppercase tracking-widest">Training Centers</span>
-            </div>
-         </div>
+          </div>
+        </div>
       </div>
 
       {/* 💼 2. Personal Brand Trust Section */}
@@ -319,40 +462,34 @@ export default function LandingPage() {
           <div className="bg-white rounded-[40px] p-8 md:p-16 shadow-2xl shadow-slate-200 border border-white flex flex-col lg:flex-row items-center gap-16 relative z-10">
             <div className="relative">
               <motion.div 
-                whileHover={{ scale: 1.02, rotate: -2 }}
-                className="w-64 h-64 md:w-[400px] md:h-[500px] rounded-[40px] overflow-hidden shadow-2xl border-8 border-white bg-slate-100"
+                whileHover={{ scale: 1.01 }}
+                className="w-full lg:w-[450px] aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl border-4 border-white bg-slate-100"
               >
                 <img src="/images/founder_divy.png" alt="Divy Mohan" className="w-full h-full object-cover" />
               </motion.div>
-              
-              <div className="absolute -bottom-8 -right-8 bg-slate-950 text-white p-8 rounded-[32px] shadow-2xl border border-white/10">
-                <div className="flex items-center gap-4 mb-3">
-                   <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center">
-                      <Icon name="patch-check-fill" className="text-white text-xl" />
-                   </div>
-                   <div>
-                     <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-primary-400">Verified Founder</p>
-                     <p className="text-lg font-black tracking-tight">Divy Mohan</p>
-                   </div>
-                </div>
-                <div className="pt-3 border-t border-white/10">
-                   <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
-                     Electronic Systems<br />
-                     IIT Madras
-                   </p>
-                </div>
-              </div>
             </div>
 
-            <div className="flex-1">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 text-primary-700 rounded-full mb-8 border border-primary-100">
-                <Icon name="stars" className="text-sm" />
-                <span className="text-[10px] font-extrabold uppercase tracking-widest">Vision from the Core</span>
+            <div className="flex-1 text-left">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="px-4 py-2 bg-slate-950 text-white rounded-2xl flex items-center gap-2 shadow-xl border border-white/5">
+                  <Icon name="patch-check-fill" className="text-primary-400 text-sm" />
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest">Verified Founder</span>
+                </div>
+                <div className="px-4 py-2 bg-primary-100 text-primary-700 rounded-2xl border border-primary-200">
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest">IIT Madras Alumnus</span>
+                </div>
               </div>
               
-              <h2 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-8">
+              <p className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-none mb-4">
+                Divy Mohan
+              </p>
+              <p className="text-sm font-extrabold text-slate-400 uppercase tracking-[0.4em] mb-8">
+                Dept. of Electronic Systems, IIT Madras
+              </p>
+              
+              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-8">
                 Building the Future of<br />
-                <span className="text-primary-600">Bharat&apos;s Education.</span>
+                <span className="text-primary-600 underline decoration-primary-600/20 underline-offset-8">Bharat&apos;s Education.</span>
               </h2>
               
               <div className="space-y-6 mb-12">
@@ -381,7 +518,7 @@ export default function LandingPage() {
                   </div>
                   <div>
                     <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Founder&apos;s Office</p>
-                    <p className="text-sm font-extrabold text-slate-900">support@educore.in</p>
+                    <p className="text-sm font-extrabold text-slate-900">divymohan.awgp@gmail.com</p>
                   </div>
                 </div>
               </div>
@@ -531,11 +668,12 @@ export default function LandingPage() {
             <p className="mt-6 text-slate-500 font-bold text-lg">No signup required. Experience the full Bharat OS ecosystem instantly.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="-mx-6 px-6 overflow-x-auto scrollbar-hide md:overflow-visible md:mx-0 md:px-0">
+          <div className="flex gap-6 w-max md:w-auto md:grid md:grid-cols-3">
             {/* Management Demo */}
             <motion.div 
               whileHover={{ y: -10 }}
-              className="group p-8 bg-white rounded-[40px] border border-slate-100 shadow-xl hover:shadow-2xl transition-all"
+              className="group p-8 bg-white rounded-[40px] border border-slate-100 shadow-xl hover:shadow-2xl transition-all w-[280px] md:w-auto flex-shrink-0"
             >
               <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center text-white text-2xl mb-8 shadow-xl group-hover:scale-110 transition-transform">
                 <Icon name="speedometer2" />
@@ -553,7 +691,7 @@ export default function LandingPage() {
             {/* Teacher Demo */}
             <motion.div 
               whileHover={{ y: -10 }}
-              className="group p-8 bg-white rounded-[40px] border border-slate-100 shadow-xl hover:shadow-2xl transition-all"
+              className="group p-8 bg-white rounded-[40px] border border-slate-100 shadow-xl hover:shadow-2xl transition-all w-[280px] md:w-auto flex-shrink-0"
             >
               <div className="w-16 h-16 bg-primary-600 rounded-2xl flex items-center justify-center text-white text-2xl mb-8 shadow-xl group-hover:scale-110 transition-transform">
                 <Icon name="person-workspace" />
@@ -571,7 +709,7 @@ export default function LandingPage() {
             {/* Student Demo */}
             <motion.div 
               whileHover={{ y: -10 }}
-              className="group p-8 bg-white rounded-[40px] border border-slate-100 shadow-xl hover:shadow-2xl transition-all"
+              className="group p-8 bg-white rounded-[40px] border border-slate-100 shadow-xl hover:shadow-2xl transition-all w-[280px] md:w-auto flex-shrink-0"
             >
               <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl mb-8 shadow-xl group-hover:scale-110 transition-transform">
                 <Icon name="mortarboard" />
@@ -585,6 +723,7 @@ export default function LandingPage() {
                 Launch Student Demo <Icon name="arrow-right-short" />
               </Link>
             </motion.div>
+          </div>
           </div>
         </div>
       </section>
@@ -603,7 +742,8 @@ export default function LandingPage() {
             <span className="text-primary-500 underline decoration-primary-500/30 decoration-8 underline-offset-8">Smart Coaching OS</span>
           </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+          <div className="-mx-6 px-6 overflow-x-auto scrollbar-hide md:overflow-visible md:mx-0 md:px-0">
+          <div className="flex gap-6 w-max md:w-auto md:grid md:grid-cols-2 lg:grid-cols-3 text-left">
             {[
               { title: 'One-Click Automation', desc: 'Send fee reminders, assignment alerts, and announcements instantly without effort.', icon: 'lightning-charge-fill', color: 'bg-primary-600 shadow-primary-500/20' },
               { title: 'Real-Time Student Tracking', desc: 'Know exactly who is studying and who is not with deep behavioral analytics.', icon: 'eye-fill', color: 'bg-emerald-600 shadow-emerald-500/20' },
@@ -618,7 +758,7 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="p-8 bg-white/5 border border-white/10 rounded-[40px] hover:bg-white/10 transition-all group"
+                className="p-8 bg-white/5 border border-white/10 rounded-[40px] hover:bg-white/10 transition-all group w-[260px] md:w-auto flex-shrink-0"
               >
                 <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-2xl transition-transform group-hover:scale-110", item.color)}>
                   <Icon name={item.icon} className="text-xl" />
@@ -627,6 +767,7 @@ export default function LandingPage() {
                 <p className="text-slate-400 font-bold leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
+          </div>
           </div>
 
           <div className="mt-20 p-8 border border-primary-500/20 bg-primary-500/5 rounded-3xl inline-block">
@@ -643,7 +784,8 @@ export default function LandingPage() {
             🤖 Smart Automation <span className="text-primary-600">In Action</span>
           </p>
 
-          <div className="grid lg:grid-cols-4 gap-6">
+          <div className="-mx-6 px-6 overflow-x-auto scrollbar-hide md:overflow-visible md:mx-0 md:px-0">
+          <div className="flex gap-5 w-max md:w-auto md:grid md:grid-cols-2 lg:grid-cols-4">
             {automationSteps.map((step, i) => (
               <motion.div
                 key={i}
@@ -665,6 +807,7 @@ export default function LandingPage() {
                  </div>
               </motion.div>
             ))}
+          </div>
           </div>
 
           <div className="mt-20 bg-primary-600 rounded-[40px] p-12 text-white relative overflow-hidden group">
@@ -912,20 +1055,22 @@ export default function LandingPage() {
             🎯 Perfect <span className="text-primary-600">For:</span>
           </p>
 
-          <div className="flex flex-wrap justify-center gap-4">
-            {targets.map((target, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="px-8 py-5 bg-slate-50 border border-slate-100 rounded-3xl flex items-center gap-3 hover:bg-white hover:shadow-xl hover:border-white transition-all cursor-default"
-              >
-                <Icon name="check-circle-fill" className="text-primary-600 text-xl" />
-                <span className="text-lg font-extrabold text-slate-900">{target}</span>
-              </motion.div>
-            ))}
+          <div className="-mx-6 px-6 overflow-x-auto scrollbar-hide md:overflow-visible md:mx-0 md:px-0">
+            <div className="flex gap-4 w-max md:w-auto md:flex-wrap md:justify-center">
+              {targets.map((target, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="px-6 py-4 bg-slate-50 border border-slate-100 rounded-3xl flex items-center gap-3 hover:bg-white hover:shadow-xl hover:border-white transition-all cursor-default flex-shrink-0"
+                >
+                  <Icon name="check-circle-fill" className="text-primary-600 text-xl" />
+                  <span className="text-base font-extrabold text-slate-900 whitespace-nowrap">{target}</span>
+                </motion.div>
+              ))}
+            </div>
           </div>
           <p className="mt-16 text-xl text-slate-500 font-bold">"If you teach students — this platform is for you."</p>
         </div>
@@ -939,13 +1084,14 @@ export default function LandingPage() {
                <p className="text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">Architecture of Intelligence.</p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="-mx-6 px-6 overflow-x-auto scrollbar-hide md:overflow-visible md:mx-0 md:px-0">
+            <div className="flex gap-6 w-max md:w-auto md:grid md:grid-cols-3">
                {[
                  { title: 'One-Click Fee OS', icon: 'currency-exchange', text: 'Automate collection reminders via SMS, Mail and WhatsApp. Zero manual follow-ups required.', color: 'blue' },
                  { title: 'Doubt Priority Engine', icon: 'chat-left-dots-fill', text: 'Autonomous sorting of student doubts. Critical and weak student nodes prioritized automatically.', color: 'orange' },
                  { title: 'Batch Pulse Analytics', icon: 'activity', text: 'System tells you exactly where performance is dropping and suggests revision classes.', color: 'emerald' },
                ].map((feat, i) => (
-                 <div key={i} className="group p-10 bg-slate-50 border border-slate-100 rounded-[40px] hover:bg-white hover:border-white hover:shadow-2xl transition-all duration-500">
+                 <div key={i} className="group p-10 bg-slate-50 border border-slate-100 rounded-[40px] hover:bg-white hover:border-white hover:shadow-2xl transition-all duration-500 w-[280px] md:w-auto flex-shrink-0">
                     <div className={cn(
                       "w-16 h-16 rounded-3xl flex items-center justify-center mb-8 shadow-lg transition-transform group-hover:rotate-12",
                       feat.color === 'blue' ? 'bg-blue-100 text-blue-600' : feat.color === 'orange' ? 'bg-orange-100 text-orange-600' : 'bg-emerald-100 text-emerald-600'
@@ -956,6 +1102,7 @@ export default function LandingPage() {
                     <p className="text-slate-500 font-bold leading-relaxed">{feat.text}</p>
                  </div>
                ))}
+            </div>
             </div>
          </div>
       </section>
@@ -978,7 +1125,8 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 items-center">
+          <div className="-mx-6 px-6 overflow-x-auto scrollbar-hide md:overflow-visible md:mx-0 md:px-0">
+          <div className="flex gap-6 w-max md:w-auto md:grid md:grid-cols-3 items-center">
             {plans.map((plan, i) => (
               <motion.div
                 key={plan.name}
@@ -987,9 +1135,9 @@ export default function LandingPage() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 className={cn(
-                  "relative p-10 rounded-[50px] border transition-all duration-500 group",
+                  "relative p-10 rounded-[50px] border transition-all duration-500 group w-[300px] md:w-auto flex-shrink-0",
                   plan.highlight 
-                    ? "bg-slate-950 text-white border-slate-900 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)] scale-105 z-10" 
+                    ? "bg-slate-950 text-white border-slate-900 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)] md:scale-105 z-10" 
                     : "bg-slate-50 border-slate-100 hover:bg-white hover:shadow-2xl hover:border-white"
                 )}
               >
@@ -1028,6 +1176,7 @@ export default function LandingPage() {
                 </Link>
               </motion.div>
             ))}
+          </div>
           </div>
         </div>
       </section>
@@ -1097,7 +1246,7 @@ export default function LandingPage() {
                      </li>
                      <li className="flex items-center gap-3">
                         <Icon name="envelope-fill" className="text-primary-600" />
-                        <span className="text-xs font-bold text-slate-700 break-all">vedmatawebdesigning@gmail.com</span>
+                        <span className="text-xs font-bold text-slate-700 break-all">divymohan.awgp@gmail.com</span>
                      </li>
                   </ul>
                </div>
@@ -1116,7 +1265,7 @@ export default function LandingPage() {
             </div>
 
             <div className="flex flex-col md:flex-row justify-between items-center gap-8 pt-12 border-t border-slate-50">
-               <p className="text-[10px] font-extrabold text-slate-300 uppercase tracking-widest">© 2026 Vedmata Web Designing • Built in India for World</p>
+               <p className="text-[10px] font-extrabold text-slate-300 uppercase tracking-widest">© 2026 EduCore Bharat OS • Built in India for World</p>
                <div className="flex items-center gap-8">
                   <Link href="#" className="text-[10px] font-extrabold text-slate-400 hover:text-slate-900 uppercase tracking-widest">Pricing Protocol</Link>
                   <Link href="#" className="text-[10px] font-extrabold text-slate-400 hover:text-slate-900 uppercase tracking-widest">SLA Agreement</Link>

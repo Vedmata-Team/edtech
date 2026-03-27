@@ -1,0 +1,148 @@
+Create a modern, premium, animated frontend demo for an All-in-One Coaching + School ERP EdTech Platform using:
+
+Next.js 14+ (App Router)
+TypeScript
+Tailwind CSS
+ShadCN UI
+Framer Motion
+
+The UI must feel like a high-end SaaS product (Notion / Stripe / Coursera level) and be optimized for conversion + SEO.
+
+🎨 DESIGN SYSTEM (STRICT):
+
+Use the following color palette consistently:
+
+Primary: #2563EB (Royal Blue)
+Secondary: #1E40AF (Deep Blue)
+Accent: #38BDF8 (Sky Blue)
+Background: #F8FAFC
+Card: #FFFFFF
+Text: #0F172A
+
+Rules:
+
+80% neutral (white/background)
+15% primary (buttons, highlights)
+5% accent (hover, glow, progress)
+
+Use soft shadows, 16–20px border radius, clean spacing.
+
+✨ UI EXPERIENCE (VERY IMPORTANT):
+
+The UI should be:
+
+Minimal but dynamic
+Clean and easy to understand instantly
+Professional (no clutter)
+
+Each section should clearly communicate:
+👉 What the product does
+👉 Why it is useful
+👉 Why user should buy
+
+⚡ ANIMATIONS (PREMIUM MICRO-INTERACTIONS):
+
+Use Framer Motion for:
+
+Card hover → slight scale (1.02–1.05) + shadow lift
+Buttons → subtle glow or pulse using accent color
+Progress bars → smooth animated fill
+Page transitions → fade + slide
+Stats counters → count-up animation
+
+Use smooth easing (ease-in-out). Avoid heavy animations.
+
+📱 RESPONSIVE DESIGN:
+
+Mobile-first approach
+Mobile:
+Bottom navigation bar (Home, Courses, Tests, Doubts, Profile)
+Desktop:
+Collapsible sidebar
+
+Ensure smooth transitions between breakpoints.
+
+🏠 LANDING PAGE (SEO + SALES FOCUSED):
+
+Create a strong landing page with:
+
+HERO SECTION:
+Headline: "All-in-One Coaching & School ERP Platform"
+Subheadline: Clear value proposition
+CTA buttons: "Start Free Demo" / "Book Demo"
+Animated illustration or dashboard preview
+FEATURES SECTION:
+Cards explaining:
+Student Management
+Live Classes
+Test Series
+Doubt Solving
+Analytics
+Fee Management
+HOW IT WORKS:
+3-step simple explanation
+TESTIMONIALS (mock)
+PRICING SECTION:
+Basic / Pro / Premium cards
+FINAL CTA:
+Strong conversion section
+
+🔍 SEO OPTIMIZATION (VERY IMPORTANT):
+
+Implement:
+
+Proper and
+Use keywords like:
+"Coaching ERP Software"
+"School Management System"
+"Online Coaching Platform"
+Semantic HTML (section, article, header)
+Proper heading hierarchy (H1, H2, H3)
+Fast loading (optimize images)
+Use Next.js Image component
+Add Open Graph meta tags
+
+🧩 DASHBOARD UI (DEMO):
+
+Create a student dashboard:
+
+Welcome section
+Stats cards (Study time, Rank, Tests)
+Continue Learning cards (with progress animation)
+Upcoming Tests (with timer)
+Performance graph
+
+Cards must be:
+
+Minimal
+One dynamic element only
+
+💬 DOUBT / CHAT UI:
+
+Split layout
+Chat bubbles (student vs teacher)
+Typing animation
+Clean and distraction-free
+
+🎥 VIDEO PAGE:
+
+Video placeholder
+"Resume from timestamp"
+Progress tracking
+Floating "Ask Doubt" button
+
+📦 CODE QUALITY:
+
+Clean reusable components
+Modular structure
+No messy inline logic
+Use proper naming conventions
+
+🎯 FINAL GOAL:
+
+Build a conversion-focused, SEO-optimized, premium SaaS frontend demo that:
+
+Looks trustworthy
+Feels smooth and fast
+Clearly explains product value
+Helps in selling the ERP EdTech platform

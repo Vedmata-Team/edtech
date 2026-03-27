@@ -1,284 +1,189 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  GraduationCap, Users, BarChart3, Eye, EyeOff, ArrowRight, CheckCircle, Shield
-} from 'lucide-react'
-import { useAuth, type UserRole } from '@/components/providers/AuthProvider'
+import { useAuth } from '@/components/providers/AuthProvider'
+import { cn } from '@/lib/utils'
 
-const roles = [
-  {
-    key: 'student' as UserRole,
-    label: 'Student',
-    icon: GraduationCap,
-    color: 'bg-blue-500',
-    desc: 'Access your classes, tests, and doubts',
-    redirect: '/student/dashboard',
-    bgColor: 'from-blue-600 to-blue-800',
-  },
-  {
-    key: 'teacher' as UserRole,
-    label: 'Teacher',
-    icon: Users,
-    color: 'bg-indigo-500',
-    desc: 'Manage classes, students, and content',
-    redirect: '/teacher/dashboard',
-    bgColor: 'from-indigo-600 to-indigo-800',
-  },
-  {
-    key: 'management' as UserRole,
-    label: 'Management',
-    icon: BarChart3,
-    color: 'bg-slate-700',
-    desc: 'Full admin control and analytics',
-    redirect: '/management/dashboard',
-    bgColor: 'from-slate-700 to-slate-900',
-  },
-]
+type Role = 'student' | 'teacher' | 'management'
 
 export default function LoginClient() {
-  const [selectedRole, setSelectedRole] = useState<UserRole | null>(null)
+  const [role, setRole] = useState<Role | null>(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [showPass, setShowPass] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [step, setStep] = useState<'role' | 'login'>('role')
+  const [isLoading, setIsLoading] = useState(false)
   const { login } = useAuth()
   const router = useRouter()
 
-  const handleRoleSelect = (r: UserRole) => {
-    setSelectedRole(r)
-    setStep('login')
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!selectedRole) return
-    setLoading(true)
-    await new Promise((res) => setTimeout(res, 1200))
-    login(selectedRole)
-    const role = roles.find((r) => r.key === selectedRole)!
-    router.push(role.redirect)
+    setIsLoading(true)
+    
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    
+    if (role) {
+      login(role)
+      router.push(`/${role}/dashboard`)
+    }
   }
-
-  const activeRole = roles.find((r) => r.key === selectedRole)
 
   return (
-    <div className="min-h-screen bg-background flex">
-      {/* Left Panel */}
-      <motion.div
-        className={`hidden lg:flex flex-col justify-between w-1/2 bg-gradient-to-br ${
-          activeRole ? activeRole.bgColor : 'from-primary-700 to-primary-900'
-        } p-12 text-white relative overflow-hidden transition-all duration-500`}
-      >
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
-        </div>
-
-        <div className="relative">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center">
-              <GraduationCap className="w-5 h-5 text-white" />
+    <div className="min-h-screen bg-slate-50 flex overflow-hidden font-sans selection:bg-primary-100 selection:text-primary-900">
+      
+      {/* Branding Side - Hidden on Mobile */}
+      <div className="hidden lg:flex flex-col flex-1 bg-slate-950 p-20 relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-600/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-600/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4" />
+        
+        <div className="relative z-10">
+          <Link href="/" className="flex items-center gap-3 group mb-20 inline-flex">
+            <div className="w-12 h-12 bg-primary-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-primary-500/30 group-hover:bg-primary-500 transition-all">
+               <i className="bi bi-mortarboard-fill text-white text-2xl"></i>
             </div>
-            <span className="font-bold text-xl">EduCore ERP</span>
+            <span className="font-extrabold text-2xl text-white tracking-tight uppercase">Edu<span className="text-primary-400">Core</span></span>
           </Link>
-        </div>
 
-        <div className="relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={selectedRole || 'default'}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-            >
-              <h2 className="text-4xl font-black mb-4 leading-tight">
-                {activeRole ? `Welcome, ${activeRole.label}` : 'India\'s #1 Coaching ERP'}
-              </h2>
-              <p className="text-blue-200 text-lg mb-8">
-                {activeRole ? activeRole.desc : 'One platform for students, teachers, and management.'}
-              </p>
-            </motion.div>
-          </AnimatePresence>
-
-          <div className="space-y-3">
-            {['500+ Institutes trust EduCore', 'Bank-grade data security', '99.9% uptime guaranteed'].map((t) => (
-              <div key={t} className="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-accent flex-shrink-0" />
-                <span className="text-blue-100 text-sm">{t}</span>
-              </div>
-            ))}
+          <div className="max-w-xl space-y-10">
+            <h1 className="text-6xl font-extrabold text-white leading-[1.1] tracking-tight">
+              India's #1 <br />
+              <span className="text-primary-400">Coaching OS</span>
+            </h1>
+            <p className="text-xl text-slate-400 font-bold leading-relaxed">
+              Experience the future of education management. One platform for students, teachers, and management with one-click automation.
+            </p>
           </div>
         </div>
 
-        <div className="relative flex items-center gap-2">
-          <Shield className="w-4 h-4 text-blue-300" />
-          <p className="text-xs text-blue-300">Your data is encrypted and protected with industry-standard security.</p>
+        <div className="mt-auto relative z-10 grid grid-cols-2 gap-8">
+           <div className="p-8 bg-white/5 border border-white/10 rounded-[32px] backdrop-blur-xl transition-all hover:bg-white/10">
+              <i className="bi bi-shield-lock-fill text-emerald-400 text-3xl mb-4"></i>
+              <p className="text-sm font-extrabold text-white uppercase tracking-widest mb-1">Bank-Grade Node</p>
+              <p className="text-xs font-bold text-slate-500">Industry-standard encryption protocol active.</p>
+           </div>
+           <div className="p-8 bg-white/5 border border-white/10 rounded-[32px] backdrop-blur-xl transition-all hover:bg-white/10">
+              <i className="bi bi-cpu text-primary-400 text-3xl mb-4"></i>
+              <p className="text-sm font-extrabold text-white uppercase tracking-widest mb-1">Automation Engine</p>
+              <p className="text-xs font-bold text-slate-500">99.9% Autonomous task execution uptime.</p>
+           </div>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Right Panel */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-        <div className="w-full max-w-md">
-          {/* Mobile logo */}
-          <div className="lg:hidden mb-8 flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-primary-600 rounded-xl flex items-center justify-center">
-              <GraduationCap className="w-5 h-5 text-white" />
-            </div>
-            <span className="font-bold text-xl text-foreground">EduCore ERP</span>
-          </div>
-
+      {/* Login Form Side */}
+      <div className="flex-1 flex flex-col items-center justify-center p-8 bg-white relative">
+        <div className="w-full max-w-lg">
           <AnimatePresence mode="wait">
-            {step === 'role' ? (
+            {!role ? (
               <motion.div
-                key="role-step"
+                key="role-selection"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.4 }}
+                className="space-y-8"
               >
-                <div className="mb-8">
-                  <h1 className="text-2xl font-black text-foreground mb-2">Choose your role</h1>
-                  <p className="text-slate-500 text-sm">Select the portal you'd like to access</p>
+                <div className="text-center md:text-left mb-12">
+                   <h2 className="text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">Authorize Your Portal</h2>
+                   <p className="text-slate-500 font-bold mt-2">Select the operational role you wish to access.</p>
                 </div>
 
-                <div className="space-y-3">
-                  {roles.map((r) => (
+                <div className="grid sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
+                  {[
+                    { id: 'student', label: 'Student Node', desc: 'Secure access to lectures and study engine.', icon: 'bi-person-badge-fill', color: 'bg-blue-600' },
+                    { id: 'teacher', label: 'Teacher Node', desc: 'Faculty terminal for sessions and grading.', icon: 'bi-person-workspace', color: 'bg-indigo-600' },
+                    { id: 'management', label: 'Admin Node', desc: 'Global management dashboard control.', icon: 'bi-speedometer2', color: 'bg-slate-900' },
+                  ].map((r) => (
                     <motion.button
-                      key={r.key}
+                      key={r.id}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() => handleRoleSelect(r.key)}
-                      className="w-full flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-200 hover:border-primary-300 hover:shadow-md transition-all duration-200 text-left group"
+                      onClick={() => setRole(r.id as Role)}
+                      className="group flex flex-col items-start gap-4 p-5 rounded-[28px] border border-slate-100 bg-slate-50 hover:bg-white hover:border-primary-200 hover:shadow-2xl transition-all text-left relative overflow-hidden h-full"
                     >
-                      <div className={`w-12 h-12 ${r.color} rounded-2xl flex items-center justify-center shadow-md flex-shrink-0`}>
-                        <r.icon className="w-6 h-6 text-white" />
+                      <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shadow-xl transition-all group-hover:scale-110", r.color)}>
+                        <i className={cn("bi", r.icon)}></i>
                       </div>
                       <div className="flex-1">
-                        <p className="font-bold text-foreground">{r.label}</p>
-                        <p className="text-sm text-slate-500">{r.desc}</p>
+                        <p className="text-sm font-extrabold text-slate-900 tracking-tight uppercase leading-none mb-1">{r.label}</p>
+                        <p className="text-[10px] font-bold text-slate-500 leading-normal">{r.desc}</p>
                       </div>
-                      <ArrowRight className="w-5 h-5 text-slate-300 group-hover:text-primary-600 group-hover:translate-x-1 transition-all" />
+                      <div className="absolute top-4 right-4 w-6 h-6 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm border border-slate-100">
+                        <i className="bi bi-chevron-right text-[10px] text-slate-900"></i>
+                      </div>
                     </motion.button>
                   ))}
                 </div>
 
-                <p className="text-center text-xs text-slate-400 mt-8">
-                  Demo mode: any credentials will work
-                </p>
+                <div className="pt-10 text-center">
+                  <p className="text-[10px] font-extrabold text-slate-300 uppercase tracking-[0.3em]">Institutional Single Sign-On Active</p>
+                </div>
               </motion.div>
             ) : (
               <motion.div
-                key="login-step"
+                key="login-form"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.4 }}
+                className="space-y-8"
               >
-                <button
-                  onClick={() => setStep('role')}
-                  className="flex items-center gap-2 text-sm text-slate-500 hover:text-primary-600 transition-colors mb-8"
-                >
-                  ← Change role
-                </button>
-
-                <div className="mb-8">
-                  {activeRole && (
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className={`w-10 h-10 ${activeRole.color} rounded-xl flex items-center justify-center shadow-md`}>
-                        <activeRole.icon className="w-5 h-5 text-white" />
-                      </div>
-                      <span className="text-sm font-semibold text-primary-600 bg-primary-50 px-3 py-1 rounded-full">
-                        {activeRole.label} Login
-                      </span>
-                    </div>
-                  )}
-                  <h1 className="text-2xl font-black text-foreground mb-2">Welcome back</h1>
-                  <p className="text-slate-500 text-sm">Enter your credentials to continue</p>
+                <div className="mb-10 flex items-center gap-4">
+                  <button 
+                    onClick={() => setRole(null)}
+                    className="w-10 h-10 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-900 hover:bg-slate-200 transition-colors shadow-sm"
+                  >
+                    <i className="bi bi-arrow-left-short text-2xl"></i>
+                  </button>
+                  <div>
+                    <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight uppercase">{role} Node Authorized</h2>
+                    <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mt-1">Operational Node Ready for Execution</p>
+                  </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-foreground mb-2">
-                      Email / Phone
-                    </label>
-                    <input
-                      id="email"
-                      type="text"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="you@example.com"
-                      className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-foreground placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-400 transition"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="password" className="block text-sm font-semibold text-foreground mb-2">
-                      Password
-                    </label>
-                    <div className="relative">
-                      <input
-                        id="password"
-                        type={showPass ? 'text' : 'password'}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Enter your password"
-                        className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-foreground placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-400 transition pr-12"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPass(!showPass)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
-                      >
-                        {showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <label className="flex items-center gap-2 text-sm text-slate-600 cursor-pointer">
-                      <input type="checkbox" className="rounded" />
-                      Remember me
-                    </label>
-                    <a href="#" className="text-sm text-primary-600 font-medium hover:underline">
-                      Forgot password?
-                    </a>
+                <div className="space-y-10">
+                  <div className="p-8 bg-primary-50 border border-primary-100 rounded-[32px] text-center relative overflow-hidden group">
+                     <div className="absolute inset-0 bg-gradient-to-tr from-primary-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                     <i className="bi bi-shield-check text-5xl text-primary-600 mb-4 block animate-pulse"></i>
+                     <p className="text-slate-900 font-bold mb-2">Authenticated Demo Mode Active</p>
+                     <p className="text-xs text-slate-500">The EduCore OS has automatically authorized this node for your session. No credentials required.</p>
                   </div>
 
                   <motion.button
-                    type="submit"
-                    disabled={loading}
-                    whileHover={{ scale: loading ? 1 : 1.01 }}
-                    whileTap={{ scale: loading ? 1 : 0.99 }}
-                    className="w-full py-3.5 bg-primary-600 hover:bg-primary-800 text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2 text-sm disabled:opacity-70"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={handleLogin}
+                    disabled={isLoading}
+                    className="w-full py-6 bg-primary-600 text-white font-extrabold uppercase tracking-[0.25em] text-[11px] rounded-[24px] shadow-2xl shadow-primary-500/30 hover:bg-primary-500 transition-all disabled:opacity-50 btn-glow"
                   >
-                    {loading ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        Signing in...
-                      </>
-                    ) : (
-                      <>
-                        Sign In
-                        <ArrowRight className="w-4 h-4" />
-                      </>
-                    )}
+                    {isLoading ? "Synchronizing Hub..." : `Enter ${role} Dashboard`}
                   </motion.button>
-                </form>
 
-                <p className="text-center text-xs text-slate-400 mt-6">
-                  Demo: enter any email and password to log in
-                </p>
+                  <div className="text-center">
+                    <button className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest hover:text-primary-600 transition-colors">Switch Institutional Node</button>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between text-[11px] font-extrabold text-slate-400 uppercase tracking-widest px-3">
+                  <button className="hover:text-primary-600">Sync Issues?</button>
+                  <button className="hover:text-primary-600">Request Reset</button>
+                </div>
+
+                <div className="p-6 bg-slate-50 border border-slate-100 rounded-[32px] text-center">
+                  <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.1em] mb-2 leading-relaxed">
+                    Demo Credentials Interface Active
+                  </p>
+                  <p className="text-[9px] font-bold text-slate-500">
+                    Any credentials will satisfy the system node in debug mode.
+                  </p>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
       </div>
+
     </div>
   )
 }
+
+import Link from 'next/link'

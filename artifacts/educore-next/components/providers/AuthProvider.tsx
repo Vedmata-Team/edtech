@@ -7,6 +7,7 @@ export type UserRole = 'student' | 'teacher' | 'management'
 interface AuthState {
   isLoggedIn: boolean
   role: UserRole | null
+  mounted: boolean
   login: (role: UserRole) => void
   logout: () => void
 }
@@ -14,6 +15,7 @@ interface AuthState {
 const AuthContext = createContext<AuthState>({
   isLoggedIn: false,
   role: null,
+  mounted: false,
   login: () => {},
   logout: () => {},
 })
@@ -23,25 +25,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    try {
+      const saved = localStorage.getItem('educore_role')
+      if (saved && ['student', 'teacher', 'management'].includes(saved)) {
+        setRole(saved as UserRole)
+      }
+    } catch {}
     setMounted(true)
-    const saved = localStorage.getItem('educore_role')
-    if (saved && ['student', 'teacher', 'management'].includes(saved)) {
-      setRole(saved as UserRole)
-    }
   }, [])
 
   const login = (r: UserRole) => {
     setRole(r)
-    localStorage.setItem('educore_role', r)
+    try { localStorage.setItem('educore_role', r) } catch {}
   }
 
   const logout = () => {
     setRole(null)
-    localStorage.removeItem('educore_role')
+    try { localStorage.removeItem('educore_role') } catch {}
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn: !!role, role, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn: !!role, role, mounted, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

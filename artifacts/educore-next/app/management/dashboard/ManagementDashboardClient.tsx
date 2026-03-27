@@ -1,14 +1,12 @@
 'use client'
 
 import DashboardLayout from '@/components/layout/DashboardLayout'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import {
-  Users, DollarSign, TrendingUp, Calendar, Bell, Download,
-  ChevronRight, CheckCircle, AlertCircle, UserPlus, BarChart3
-} from 'lucide-react'
+import { useState } from 'react'
+import { cn } from '@/lib/utils'
 
-const LineChartComponent = dynamic(
+const RevenueChart = dynamic(
   () => import('recharts').then((m) => {
     const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } = m
     return function Chart() {
@@ -22,246 +20,282 @@ const LineChartComponent = dynamic(
         { month: 'Feb', revenue: 6.8, collected: 6.2 },
       ]
       return (
-        <ResponsiveContainer width="100%" height={200}>
-          <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+        <ResponsiveContainer width="100%" height={220}>
+          <LineChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
             <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
             <YAxis tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} tickFormatter={(v) => `₹${v}L`} />
             <Tooltip
-              contentStyle={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 12, fontSize: 12 }}
+              contentStyle={{ background: '#fff', border: 'none', borderRadius: 16, fontSize: 12, boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)' }}
               formatter={(v: number) => [`₹${v}L`, '']}
             />
-            <Legend iconType="circle" iconSize={8} />
-            <Line type="monotone" dataKey="revenue" stroke="#2563EB" strokeWidth={2.5} dot={{ fill: '#2563EB', r: 4 }} name="Total Fees" />
-            <Line type="monotone" dataKey="collected" stroke="#38BDF8" strokeWidth={2.5} dot={{ fill: '#38BDF8', r: 4 }} name="Collected" strokeDasharray="5 3" />
+            <Line type="monotone" dataKey="revenue" stroke="#2563EB" strokeWidth={3} dot={{ fill: '#2563EB', r: 4 }} activeDot={{ r: 6, strokeWidth: 0 }} />
+            <Line type="monotone" dataKey="collected" stroke="#10B981" strokeWidth={3} strokeDasharray="5 5" dot={{ fill: '#10B981', r: 4 }} />
           </LineChart>
         </ResponsiveContainer>
       )
     }
   }),
-  { ssr: false, loading: () => <div className="h-48 animate-pulse bg-slate-100 rounded-xl" /> }
+  { ssr: false, loading: () => <div className="h-52 animate-pulse bg-slate-100 rounded-2xl" /> }
 )
 
 const stats = [
-  { label: 'Total Students', value: '1,248', icon: Users, color: 'bg-blue-50 text-blue-600', change: '+32 this month', trend: 'up' },
-  { label: 'Revenue (Month)', value: '₹6.4L', icon: DollarSign, color: 'bg-emerald-50 text-emerald-600', change: '+18% vs last month', trend: 'up' },
-  { label: 'Attendance Today', value: '87%', icon: Calendar, color: 'bg-violet-50 text-violet-600', change: '1,085/1,248 present', trend: 'up' },
-  { label: 'Pending Fees', value: '₹1.2L', icon: AlertCircle, color: 'bg-orange-50 text-orange-600', change: '48 students', trend: 'down' },
+  { label: 'Total Students', value: '1,248', icon: 'bi-people-fill', bg: 'bg-blue-50', iconColor: 'text-blue-600', dynamic: '32 new this month', status: 'up' },
+  { label: 'Revenue (MTD)', value: '₹6.4L', icon: 'bi-bank2', bg: 'bg-emerald-50', iconColor: 'text-emerald-600', dynamic: '18% growth', status: 'up' },
+  { label: 'Attendance', value: '87%', icon: 'bi-calendar-check-fill', bg: 'bg-violet-50', iconColor: 'text-violet-600', dynamic: '1,085 present today', status: 'stable' },
+  { label: 'Pending Fees', value: '₹1.2L', icon: 'bi-exclamation-octagon-fill', bg: 'bg-orange-50', iconColor: 'text-orange-600', dynamic: '48 defaulters', status: 'alert' },
 ]
 
-const recentStudents = [
-  { name: 'Arjun Mehta', batch: 'JEE-A 2025', fee: '₹45,000', status: 'paid', date: '2 days ago' },
-  { name: 'Priya Patel', batch: 'NEET-B 2025', fee: '₹38,000', status: 'pending', date: '1 day ago' },
-  { name: 'Karan Singh', batch: 'JEE-B 2025', fee: '₹42,000', status: 'paid', date: '3 days ago' },
-  { name: 'Ananya Roy', batch: 'Boards 2025', fee: '₹28,000', status: 'partial', date: '5 days ago' },
-  { name: 'Rohan Gupta', batch: 'JEE-A 2025', fee: '₹45,000', status: 'paid', date: '1 week ago' },
+const suggestions = [
+  { id: 1, text: '20 students haven’t submitted Physics DPP since 3 days.', type: 'warning', action: 'Notify Students', icon: 'bi-lightning-charge-fill' },
+  { id: 2, text: 'Mathematics Batch B performance dropped by 12% in last test.', type: 'danger', action: 'Assign Extra Class', icon: 'bi-graph-down-arrow' },
+  { id: 3, text: 'Attendance in morning batches is below 70% this week.', type: 'info', action: 'Check Logs', icon: 'bi-info-circle-fill' },
 ]
-
-const alerts = [
-  { text: '48 students have pending fees for March', type: 'warning', icon: AlertCircle },
-  { text: 'NEET Batch attendance below 75% — 3 students', type: 'error', icon: AlertCircle },
-  { text: 'New enrollment: 5 students joined today', type: 'success', icon: CheckCircle },
-  { text: 'Teacher Vikram Sir requested leave tomorrow', type: 'info', icon: Bell },
-]
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-}
 
 export default function ManagementDashboardClient() {
+  const [sendingReminder, setSendingReminder] = useState(false)
+  const [activeTab, setActiveTab] = useState('overview')
+
+  const handleSendReminder = () => {
+    setSendingReminder(true)
+    setTimeout(() => setSendingReminder(false), 2000)
+  }
+
   return (
-    <DashboardLayout role="management" title="Management Dashboard">
-      {/* Welcome */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-6 bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-5 text-white flex items-center justify-between"
-      >
-        <div>
-          <p className="text-slate-400 text-sm mb-1">Good morning, Admin 👋</p>
-          <h2 className="text-xl font-bold">Admin Dashboard</h2>
-          <p className="text-slate-400 text-sm mt-1">EduCore Institute · All Branches</p>
-        </div>
-        <div className="hidden sm:flex gap-3">
-          <button className="flex items-center gap-2 bg-primary-600 hover:bg-primary-500 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors">
-            <UserPlus className="w-4 h-4" />
-            New Enrollment
-          </button>
-          <button className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-medium px-4 py-2 rounded-xl text-sm transition-colors">
-            <Download className="w-4 h-4" />
-            Export Report
-          </button>
-        </div>
-      </motion.div>
-
-      {/* Stats */}
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-        className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6"
-      >
-        {stats.map((s) => (
-          <motion.div key={s.label} variants={fadeUp} className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
-            <div className={`w-10 h-10 ${s.color} rounded-xl flex items-center justify-center mb-3`}>
-              <s.icon className="w-5 h-5" />
-            </div>
-            <p className="text-2xl font-black text-foreground">{s.value}</p>
-            <p className="text-xs text-slate-500 mt-0.5">{s.label}</p>
-            <p className={`text-xs font-medium mt-1 ${s.trend === 'up' ? 'text-emerald-600' : 'text-orange-600'}`}>
-              {s.change}
-            </p>
-          </motion.div>
-        ))}
-      </motion.div>
-
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
-          {/* Revenue Chart */}
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="font-bold text-foreground">Fee Collection Trend</h3>
-                <p className="text-xs text-slate-500">Last 7 months (in Lakhs)</p>
+    <DashboardLayout role="management" title="Admin Control Center">
+      <div className="max-w-[1600px] mx-auto space-y-6">
+        
+        {/* Header Automation Banner */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative overflow-hidden bg-slate-900 rounded-3xl p-6 text-white border border-slate-800 shadow-2xl"
+        >
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-primary-600/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/4" />
+          <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="bg-primary-500/20 text-primary-400 text-[10px] font-extrabold uppercase tracking-widest px-2 py-1 rounded-md border border-primary-500/30">
+                  <i className="bi bi-cpu-fill mr-1"></i> Automation Active
+                </span>
               </div>
-              <button className="flex items-center gap-1.5 text-xs text-primary-600 font-semibold bg-primary-50 px-3 py-1.5 rounded-full hover:bg-primary-100 transition-colors">
-                <Download className="w-3.5 h-3.5" />
-                Export
-              </button>
+              <h1 className="text-2xl font-extrabold tracking-tight">System Intelligence Dashboard</h1>
+              <p className="text-slate-400 text-sm mt-1 font-medium">EduCore Institute Management · Multi-Branch OS</p>
             </div>
-            <LineChartComponent />
-          </motion.div>
+            
+            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-500 text-white font-bold px-5 py-3 rounded-2xl text-sm transition-all shadow-[0_10px_20px_-5px_rgba(37,99,235,0.4)] btn-glow w-full sm:w-auto"
+              >
+                <i className="bi bi-megaphone-fill"></i>
+                Bulk Announcement
+              </motion.button>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleSendReminder}
+                disabled={sendingReminder}
+                className={cn(
+                  "flex items-center justify-center gap-2 font-bold px-5 py-3 rounded-2xl text-sm transition-all border shadow-lg auto-pulse w-full sm:w-auto",
+                  sendingReminder 
+                    ? "bg-emerald-600 border-emerald-500 text-white" 
+                    : "bg-white/5 border-white/10 text-white hover:bg-white/10"
+                )}
+              >
+                {sendingReminder ? (
+                  <>
+                    <i className="bi bi-check-circle-fill"></i>
+                    Reminders Sent
+                  </>
+                ) : (
+                  <>
+                    <i className="bi bi-send-fill text-orange-400"></i>
+                    Send Fee Reminders
+                  </>
+                )}
+              </motion.button>
+            </div>
+          </div>
+        </motion.div>
 
-          {/* Recent Enrollments / Student Table */}
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-foreground">Recent Enrollments</h3>
-              <button className="text-xs text-primary-600 font-semibold flex items-center gap-1 hover:underline">
-                View all <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-slate-100">
-                    <th className="pb-3 text-left text-xs font-semibold text-slate-500">Student</th>
-                    <th className="pb-3 text-left text-xs font-semibold text-slate-500">Batch</th>
-                    <th className="pb-3 text-left text-xs font-semibold text-slate-500">Fee</th>
-                    <th className="pb-3 text-left text-xs font-semibold text-slate-500">Status</th>
-                    <th className="pb-3 text-left text-xs font-semibold text-slate-500">Joined</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-50">
-                  {recentStudents.map((s, i) => (
-                    <motion.tr
-                      key={s.name}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: i * 0.07 }}
-                      className="hover:bg-slate-50 transition-colors"
-                    >
-                      <td className="py-3">
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center text-primary-700 text-xs font-bold flex-shrink-0">
-                            {s.name.split(' ').map((n) => n[0]).join('')}
-                          </div>
-                          <span className="font-medium text-foreground">{s.name}</span>
-                        </div>
-                      </td>
-                      <td className="py-3 text-slate-500 text-xs">{s.batch}</td>
-                      <td className="py-3 font-semibold text-foreground">{s.fee}</td>
-                      <td className="py-3">
-                        <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full ${
-                          s.status === 'paid' ? 'bg-emerald-100 text-emerald-700' :
-                          s.status === 'pending' ? 'bg-orange-100 text-orange-700' :
-                          'bg-amber-100 text-amber-700'
-                        }`}>
-                          {s.status === 'paid' && <CheckCircle className="w-3 h-3" />}
-                          {s.status.charAt(0).toUpperCase() + s.status.slice(1)}
-                        </span>
-                      </td>
-                      <td className="py-3 text-slate-400 text-xs">{s.date}</td>
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </motion.div>
+        {/* Smart Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {stats.map((s, idx) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ y: -5 }}
+              className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm transition-all group hover:shadow-xl hover:shadow-slate-200/50"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:rotate-6", s.bg)}>
+                  <i className={cn("bi text-xl", s.icon, s.iconColor)}></i>
+                </div>
+                {s.status === 'alert' && (
+                  <span className="flex h-2 w-2 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.6)]"></span>
+                  </span>
+                )}
+              </div>
+              <p className="text-3xl font-extrabold text-slate-900 tracking-tight">{s.value}</p>
+              <p className="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wider">{s.label}</p>
+              <div className="mt-4 pt-4 border-t border-slate-50 flex items-center justify-between">
+                <span className="text-[11px] font-bold text-slate-400">{s.dynamic}</span>
+                <i className={cn("bi", s.status === 'up' ? 'bi-arrow-up-circle-fill text-emerald-500' : 'bi-dash-circle-fill text-slate-300')}></i>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
-        {/* Right sidebar */}
-        <div className="space-y-5">
-          {/* Alerts */}
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-foreground">Alerts</h3>
-              <span className="w-6 h-6 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold">4</span>
-            </div>
-            <div className="space-y-3">
-              {alerts.map((a, i) => (
-                <div key={i} className={`flex items-start gap-3 p-3 rounded-xl ${
-                  a.type === 'warning' ? 'bg-orange-50' :
-                  a.type === 'error' ? 'bg-red-50' :
-                  a.type === 'success' ? 'bg-emerald-50' : 'bg-blue-50'
-                }`}>
-                  <a.icon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${
-                    a.type === 'warning' ? 'text-orange-500' :
-                    a.type === 'error' ? 'text-red-500' :
-                    a.type === 'success' ? 'text-emerald-500' : 'text-blue-500'
-                  }`} />
-                  <p className="text-xs text-slate-700 leading-relaxed">{a.text}</p>
+        {/* Main Content Area */}
+        <div className="grid lg:grid-cols-3 gap-6">
+          
+          {/* Revenue and Automation Tables */}
+          <div className="lg:col-span-2 space-y-6">
+            
+            {/* Intelligent Suggestions Panel */}
+            <section className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                <i className="bi bi-stars text-8xl text-primary-600"></i>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div>
+                  <h3 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                    <i className="bi bi-lightbulb-fill text-primary-500"></i>
+                    Smart Suggestions Panel
+                  </h3>
+                  <p className="text-sm text-slate-500 font-medium">AI-driven actionable insights for today</p>
                 </div>
-              ))}
-            </div>
-          </motion.div>
+              </div>
+              
+              <div className="space-y-3">
+                {suggestions.map((item) => (
+                  <motion.div 
+                    key={item.id}
+                    className={cn(
+                      "flex flex-col md:flex-row md:items-center justify-between p-4 rounded-2xl border transition-all hover:scale-[1.01]",
+                      item.type === 'warning' ? "bg-amber-50 border-amber-100" : 
+                      item.type === 'danger' ? "bg-red-50 border-red-100" : "bg-blue-50 border-blue-100"
+                    )}
+                  >
+                    <div className="flex items-center gap-3 mb-3 md:mb-0">
+                      <div className={cn(
+                        "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm",
+                        item.type === 'warning' ? "bg-white text-amber-600" : 
+                        item.type === 'danger' ? "bg-white text-red-600" : "bg-white text-blue-600"
+                      )}>
+                        <i className={cn("bi", item.icon)}></i>
+                      </div>
+                      <p className="text-xs font-bold text-slate-700 leading-snug">{item.text}</p>
+                    </div>
+                    <button className={cn(
+                      "px-4 py-2 rounded-xl text-[11px] font-extrabold uppercase tracking-widest transition-all btn-glow shadow-sm",
+                      item.type === 'warning' ? "bg-amber-600 text-white" : 
+                      item.type === 'danger' ? "bg-red-600 text-white" : "bg-blue-600 text-white"
+                    )}>
+                      {item.action}
+                    </button>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
 
-          {/* Attendance overview */}
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-            <h3 className="font-bold text-foreground mb-4">Batch Attendance Today</h3>
-            <div className="space-y-3.5">
-              {[
-                { batch: 'JEE Mains-A', pct: 92 },
-                { batch: 'JEE Mains-B', pct: 78 },
-                { batch: 'NEET-A', pct: 88 },
-                { batch: 'NEET-B', pct: 71 },
-                { batch: 'Board Prep', pct: 95 },
-              ].map((b) => (
-                <div key={b.batch}>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-xs font-medium text-foreground">{b.batch}</span>
-                    <span className={`text-xs font-bold ${b.pct >= 80 ? 'text-emerald-600' : 'text-orange-600'}`}>{b.pct}%</span>
-                  </div>
-                  <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${b.pct}%` }}
-                      transition={{ duration: 1, ease: 'easeOut' }}
-                      className={`h-full rounded-full ${b.pct >= 80 ? 'bg-emerald-500' : 'bg-orange-400'}`}
-                    />
-                  </div>
+            {/* Collection Graph */}
+            <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-lg font-extrabold text-slate-900">Fee Collection Analytics</h3>
+                  <p className="text-xs text-slate-500 font-bold mt-1 uppercase tracking-widest">Real-time revenue stream tracking</p>
                 </div>
-              ))}
+                <div className="flex gap-2">
+                   <button className="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:bg-slate-100 transition-colors">
+                     <i className="bi bi-download"></i>
+                   </button>
+                </div>
+              </div>
+              <RevenueChart />
             </div>
-          </motion.div>
 
-          {/* Quick stats */}
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl p-5 text-white">
-            <h3 className="font-bold mb-4">Monthly Overview</h3>
-            <div className="space-y-3">
-              {[
-                { label: 'New Enrollments', value: '32' },
-                { label: 'Tests Conducted', value: '128' },
-                { label: 'Live Classes', value: '84' },
-                { label: 'Doubts Resolved', value: '2,340' },
-              ].map((s) => (
-                <div key={s.label} className="flex justify-between items-center">
-                  <span className="text-blue-200 text-sm">{s.label}</span>
-                  <span className="text-white font-bold">{s.value}</span>
-                </div>
-              ))}
+          </div>
+
+          {/* Right Sidebar Automation */}
+          <div className="space-y-6">
+            
+            {/* One-Click Action Center */}
+            <section className="bg-slate-50 rounded-3xl p-6 border border-slate-200 flex flex-col gap-4">
+              <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-[0.2em]">Quick Action OS</h3>
+              <div className="grid grid-cols-2 gap-3">
+                <button className="flex flex-col items-center justify-center p-4 bg-white rounded-2xl border border-slate-200 hover:border-primary-500 hover:text-primary-600 transition-all group">
+                  <i className="bi bi-person-plus-fill text-2xl mb-2 text-slate-400 group-hover:text-primary-500 icon-bounce"></i>
+                  <span className="text-[10px] font-extrabold uppercase tracking-tighter">Add Student</span>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 bg-white rounded-2xl border border-slate-200 hover:border-emerald-500 hover:text-emerald-600 transition-all group">
+                  <i className="bi bi-currency-dollar text-2xl mb-2 text-slate-400 group-hover:text-emerald-500 icon-bounce"></i>
+                  <span className="text-[10px] font-extrabold uppercase tracking-tighter">Collect Fee</span>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 bg-white rounded-2xl border border-slate-200 hover:border-violet-500 hover:text-violet-600 transition-all group">
+                  <i className="bi bi-window-stack text-2xl mb-2 text-slate-400 group-hover:text-violet-500 icon-bounce"></i>
+                  <span className="text-[10px] font-extrabold uppercase tracking-tighter">New Batch</span>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 bg-white rounded-2xl border border-slate-200 hover:border-orange-500 hover:text-orange-600 transition-all group">
+                  <i className="bi bi-file-earmark-pdf-fill text-2xl mb-2 text-slate-400 group-hover:text-orange-500 icon-bounce"></i>
+                  <span className="text-[10px] font-extrabold uppercase tracking-tighter">Report Gen</span>
+                </button>
+              </div>
+            </section>
+
+            {/* Fee Defaulters List with Automation */}
+            <section className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm">
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest">Fee Defaulters</h3>
+                <span className="bg-red-100 text-red-600 text-[10px] font-extrabold px-2 py-1 rounded-lg">48 Pending</span>
+              </div>
+              <div className="space-y-3 mb-5">
+                {[
+                  { name: 'Priya Patel', amount: '₹12,400', batch: 'JEE-A 2025' },
+                  { name: 'Arjun Singh', amount: '₹8,900', batch: 'NEET-B 2025' },
+                  { name: 'Rohan Gupta', amount: '₹15,000', batch: 'Fdn-C 2026' },
+                ].map((std) => (
+                  <div key={std.name} className="flex items-center justify-between p-3 bg-slate-50 rounded-2xl group hover:bg-slate-100 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center font-bold text-[10px] text-slate-600">
+                        {std.name[0]}
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-slate-800">{std.name}</p>
+                        <p className="text-[10px] font-medium text-slate-500">{std.batch}</p>
+                      </div>
+                    </div>
+                    <p className="text-xs font-extrabold text-red-600">{std.amount}</p>
+                  </div>
+                ))}
+              </div>
+              <button className="w-full py-3 bg-slate-900 text-white text-[11px] font-extrabold uppercase tracking-[0.15em] rounded-2xl hover:bg-slate-800 transition-all btn-glow shadow-xl">
+                 View All Defaulters
+              </button>
+            </section>
+
+            {/* Multi Ad System Placeholder */}
+            <div className="relative group rounded-3xl overflow-hidden shadow-lg shadow-primary-900/10">
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent z-10" />
+              <img 
+                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80" 
+                alt="Ad" 
+                className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700" 
+              />
+              <div className="absolute bottom-4 left-4 right-4 z-20">
+                <p className="text-white font-extrabold text-sm mb-1 uppercase">Upgrade to Pro ERP</p>
+                <p className="text-white/70 text-[10px] font-medium">Get Predictive AI Analytics for your institute</p>
+              </div>
+              <div className="absolute top-2 right-2 bg-white/20 backdrop-blur-md px-2 py-0.5 rounded text-[8px] text-white font-extrabold uppercase tracking-widest z-20 border border-white/20">Sponsored</div>
             </div>
-          </motion.div>
+
+          </div>
         </div>
       </div>
     </DashboardLayout>

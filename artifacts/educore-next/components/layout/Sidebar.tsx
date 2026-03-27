@@ -1,57 +1,57 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '@/components/providers/AuthProvider'
-import { useRouter } from 'next/navigation'
-import {
-  GraduationCap, LayoutDashboard, Video, ClipboardList, MessageCircle,
-  BookOpen, BarChart3, Users, DollarSign, Calendar, LogOut, Settings, Bell
-} from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { motion } from 'framer-motion'
 
 const studentNav = [
-  { href: '/student/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { href: '/student/video/1', icon: Video, label: 'Video Lectures' },
-  { href: '/student/doubts', icon: MessageCircle, label: 'Doubts' },
-  { href: '#', icon: ClipboardList, label: 'Mock Tests' },
-  { href: '#', icon: BarChart3, label: 'Analytics' },
-  { href: '#', icon: BookOpen, label: 'Study Material' },
+  { href: '/student/dashboard', icon: 'bi-grid-1x2-fill', label: 'Dashboard Hub' },
+  { href: '/student/video', icon: 'bi-play-circle-fill', label: 'Video Lectures' },
+  { href: '/student/doubts', icon: 'bi-chat-dots-fill', label: 'Doubt Solver' },
+  { href: '/student/tests', icon: 'bi-clipboard-check-fill', label: 'Mock Arena' },
+  { href: '/student/analytics', icon: 'bi-bar-chart-fill', label: 'Pulse Analytics' },
+  { href: '/student/study-mate', icon: 'bi-robot', label: 'Study Mate AI' },
 ]
 
 const teacherNav = [
-  { href: '/teacher/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { href: '#', icon: Video, label: 'Live Classes' },
-  { href: '#', icon: ClipboardList, label: 'Create Tests' },
-  { href: '#', icon: MessageCircle, label: 'Doubts Inbox' },
-  { href: '#', icon: BarChart3, label: 'Analytics' },
-  { href: '#', icon: Users, label: 'My Students' },
+  { href: '/teacher/dashboard', icon: 'bi-grid-1x2-fill', label: 'Dashboard Hub' },
+  { href: '/teacher/live', icon: 'bi-broadcast', label: 'Live Classes' },
+  { href: '/teacher/tests', icon: 'bi-file-earmark-plus-fill', label: 'Create Tests' },
+  { href: '/teacher/doubts', icon: 'bi-inboxes-fill', label: 'Doubts Inbox' },
+  { href: '/teacher/analytics', icon: 'bi-bar-chart-fill', label: 'Analytics' },
+  { href: '/teacher/students', icon: 'bi-people-fill', label: 'My Students' },
 ]
 
 const managementNav = [
-  { href: '/management/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { href: '#', icon: Users, label: 'Students' },
-  { href: '#', icon: DollarSign, label: 'Fee Management' },
-  { href: '#', icon: Calendar, label: 'Attendance' },
-  { href: '#', icon: BarChart3, label: 'Reports' },
-  { href: '#', icon: Bell, label: 'Notifications' },
+  { href: '/management/dashboard', icon: 'bi-speedometer2', label: 'Dashboard Hub' },
+  { href: '/management/students', icon: 'bi-mortarboard-fill', label: 'Students' },
+  { href: '/management/fees', icon: 'bi-cash-coin', label: 'Fee Management' },
+  { href: '/management/attendance', icon: 'bi-calendar-check-fill', label: 'Attendance' },
+  { href: '/management/reports', icon: 'bi-file-earmark-bar-graph-fill', label: 'Reports' },
+  { href: '/management/notifications', icon: 'bi-bell-fill', label: 'Notifications' },
 ]
 
 const navMap = { student: studentNav, teacher: teacherNav, management: managementNav }
 
-interface SidebarProps {
-  role: 'student' | 'teacher' | 'management'
+const roleConfig = {
+  student: { label: 'Student Portal', name: 'Arjun Mehta', avatar: 'AM', accent: 'bg-blue-600' },
+  teacher: { label: 'Teacher Portal', name: 'Rahul Sir', avatar: 'RS', accent: 'bg-indigo-600' },
+  management: { label: 'Admin Portal', name: 'Admin', avatar: 'AD', accent: 'bg-slate-700' },
 }
 
-export default function Sidebar({ role }: SidebarProps) {
+interface SidebarProps {
+  role: 'student' | 'teacher' | 'management'
+  className?: string
+}
+
+export default function Sidebar({ role, className }: SidebarProps) {
   const pathname = usePathname()
   const { logout } = useAuth()
   const router = useRouter()
   const nav = navMap[role]
-
-  const roleLabels = { student: 'Student Portal', teacher: 'Teacher Portal', management: 'Admin Portal' }
-  const roleNames = { student: 'Arjun Mehta', teacher: 'Rahul Sir', management: 'Admin' }
-  const roleAvatars = { student: 'AM', teacher: 'RS', management: 'AD' }
+  const config = roleConfig[role]
 
   const handleLogout = () => {
     logout()
@@ -59,35 +59,41 @@ export default function Sidebar({ role }: SidebarProps) {
   }
 
   return (
-    <aside className="hidden lg:flex flex-col fixed left-0 top-0 h-full w-64 bg-foreground text-white z-40">
+    <aside className={cn("hidden lg:flex flex-col fixed left-0 top-0 h-full w-64 bg-slate-950 text-white z-[90] border-r border-slate-900 transition-all duration-500", className)}>
       {/* Logo */}
-      <div className="p-5 border-b border-slate-800">
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-primary-600 rounded-xl flex items-center justify-center shadow-md">
-            <GraduationCap className="w-5 h-5 text-white" />
-          </div>
-          <span className="font-bold text-lg tracking-tight">
-            Edu<span className="text-accent">Core</span>
+      <div className="px-5 py-5 border-b border-slate-900">
+        <Link href="/" className="flex items-center gap-3 group">
+          <motion.div 
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.4)] group-hover:bg-primary-500 transition-all cursor-pointer"
+          >
+            <i className="bi bi-mortarboard-fill text-xl text-white"></i>
+          </motion.div>
+          <span className="font-extrabold text-xl tracking-tight">
+            Edu<span className="text-primary-400">Core</span>
           </span>
         </Link>
       </div>
 
       {/* User profile */}
-      <div className="p-4 border-b border-slate-800 mx-3 my-3 bg-slate-800/50 rounded-2xl">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
-            {roleAvatars[role]}
+      <div className="px-3 py-4">
+        <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl p-3 backdrop-blur-sm">
+          <div className={cn("w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 shadow-inner", config.accent)}>
+            {config.avatar}
           </div>
-          <div>
-            <p className="text-sm font-semibold text-white">{roleNames[role]}</p>
-            <p className="text-xs text-slate-400">{roleLabels[role]}</p>
+          <div className="min-w-0">
+            <p className="text-sm font-bold text-white truncate">{config.name}</p>
+            <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest truncate">{config.label}</p>
+          </div>
+          <div className="ml-auto">
+             <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
           </div>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-2 overflow-y-auto">
-        <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest px-3 mb-3">Navigation</p>
+      <nav className="flex-1 px-3 py-2 overflow-y-auto scrollbar-hide">
+        <p className="text-[10px] font-extrabold text-slate-600 uppercase tracking-[0.2em] px-3 mb-4">Core Operating System</p>
         <ul className="space-y-1">
           {nav.map((item) => {
             const active = pathname === item.href
@@ -96,14 +102,21 @@ export default function Sidebar({ role }: SidebarProps) {
                 <Link
                   href={item.href}
                   className={cn(
-                    'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150',
+                    'flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-semibold transition-all duration-300 group relative overflow-hidden',
                     active
-                      ? 'bg-primary-600 text-white shadow-lg shadow-primary-900/30'
-                      : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                      ? 'bg-primary-600/10 text-primary-400 border border-primary-600/20'
+                      : 'text-slate-400 hover:bg-white/5 hover:text-white border border-transparent'
                   )}
                 >
-                  <item.icon className="w-5 h-5 flex-shrink-0" />
+                  <i className={cn('bi text-lg transition-transform duration-300 group-hover:scale-110 icon-bounce', item.icon, active ? 'text-primary-400' : 'text-slate-500Group-hover:text-white')}></i>
                   {item.label}
+                  {active && (
+                    <motion.div 
+                      layoutId="active-pill"
+                      className="ml-auto w-1 h-4 bg-primary-500 rounded-full" 
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </Link>
               </li>
             )
@@ -112,17 +125,20 @@ export default function Sidebar({ role }: SidebarProps) {
       </nav>
 
       {/* Bottom actions */}
-      <div className="p-3 border-t border-slate-800 space-y-1">
-        <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:bg-slate-800 hover:text-white transition-all">
-          <Settings className="w-5 h-5" />
-          Settings
+      <div className="px-3 py-4 border-t border-slate-900 space-y-1">
+        <Link
+          href="#"
+          className="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-semibold text-slate-500 hover:bg-white/5 hover:text-white transition-all group"
+        >
+          <i className="bi bi-gear-wide-connected text-lg group-hover:rotate-45 transition-transform duration-500"></i>
+          System Settings
         </Link>
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:bg-red-900/30 hover:text-red-400 transition-all"
+          className="w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-semibold text-slate-500 hover:bg-red-500/10 hover:text-red-400 transition-all group"
         >
-          <LogOut className="w-5 h-5" />
-          Log Out
+          <i className="bi bi-power text-lg"></i>
+          Terminate Session
         </button>
       </div>
     </aside>

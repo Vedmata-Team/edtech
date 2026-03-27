@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import './globals.css'
 import { AuthProvider } from '@/components/providers/AuthProvider'
 
-const inter = Inter({
+const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800', '900'],
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
   display: 'swap',
 })
 
@@ -114,17 +114,33 @@ const jsonLd = {
   },
 }
 
+import { TopStrip } from '@/components/layout/TopStrip'
+import { GlobalHeader } from '@/components/layout/GlobalHeader'
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        />
       </head>
-      <body className={inter.className}>
-        <AuthProvider>{children}</AuthProvider>
+      <body className={poppins.className} suppressHydrationWarning>
+        <AuthProvider>
+          <div className="relative flex flex-col min-h-screen">
+            <TopStrip />
+            {/* The GlobalHeader is fixed internally, so we don't need to wrap it specifically */}
+            <GlobalHeader />
+            <main className="flex-1">
+              {children}
+            </main>
+          </div>
+        </AuthProvider>
       </body>
     </html>
   )

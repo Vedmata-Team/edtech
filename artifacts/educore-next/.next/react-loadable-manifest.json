@@ -1,0 +1,44 @@
+{
+  "app\\management\\dashboard\\ManagementDashboardClient.tsx -> recharts": {
+    "id": "app\\management\\dashboard\\ManagementDashboardClient.tsx -> recharts",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_recharts_es6_index_js.js"
+    ]
+  },
+  "app\\student\\dashboard\\StudentDashboardClient.tsx -> recharts": {
+    "id": "app\\student\\dashboard\\StudentDashboardClient.tsx -> recharts",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_recharts_es6_index_js.js"
+    ]
+  },
+  "app\\teacher\\analytics\\page.tsx -> recharts": {
+    "id": "app\\teacher\\analytics\\page.tsx -> recharts",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_recharts_es6_index_js.js"
+    ]
+  },
+  "app\\teacher\\dashboard\\TeacherDashboardClient.tsx -> recharts": {
+    "id": "app\\teacher\\dashboard\\TeacherDashboardClient.tsx -> recharts",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_recharts_es6_index_js.js"
+    ]
+  },
+  "node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts": {
+    "id": "node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js"
+    ]
+  },
+  "node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
+    "id": "node_modules\\next\\dist\\client\\index.js -> ../pages/_app",
+    "files": [
+      "static/chunks/_pages-dir-browser_node_modules_next_dist_pages__app_js.js"
+    ]
+  },
+  "node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
+    "id": "node_modules\\next\\dist\\client\\index.js -> ../pages/_error",
+    "files": [
+      "static/chunks/_pages-dir-browser_node_modules_next_dist_pages__error_js.js"
+    ]
+  }
+}

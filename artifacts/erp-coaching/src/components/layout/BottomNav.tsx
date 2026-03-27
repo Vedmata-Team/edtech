@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Home, BookOpen, ClipboardList, MessageCircle, User, Users, CreditCard, Calendar, FileText } from "lucide-react";
+import { Home, BookOpen, ClipboardList, MessageCircle, User, Users, CreditCard, Calendar, FileText, Video } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useAuthContext } from "@/context/auth-context";
@@ -13,11 +13,11 @@ const STUDENT_NAV = [
 ];
 
 const TEACHER_NAV = [
-  { name: "Home", icon: Home, path: "/teacher/dashboard" },
-  { name: "Classes", icon: BookOpen, path: "/teacher/classes" },
-  { name: "Tasks", icon: ClipboardList, path: "/teacher/assignments" },
-  { name: "Doubts", icon: MessageCircle, path: "/teacher/doubts" },
-  { name: "Profile", icon: User, path: "/teacher/analytics" },
+  { name: "Home",    icon: Home,          path: "/teacher/dashboard" },
+  { name: "Classes", icon: Video,         path: "/teacher/classes" },
+  { name: "Tests",   icon: ClipboardList, path: "/teacher/assignments" },
+  { name: "Doubts",  icon: MessageCircle, path: "/teacher/doubts" },
+  { name: "Students",icon: Users,         path: "/teacher/students" },
 ];
 
 const MANAGEMENT_NAV = [

@@ -25,6 +25,38 @@ import {
   Sparkles,
 } from "lucide-react";
 
+const WHATSAPP_NUMBER = "919999999999"; // replace with real number
+const WHATSAPP_MSG = encodeURIComponent("Hi! I'd like to know more about EduCore ERP. Website: edtech.vmdonline.cloud");
+
+function WhatsAppButton() {
+  return (
+    <a
+      href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MSG}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat on WhatsApp"
+      className="fixed bottom-5 right-4 z-50 flex items-center gap-2 bg-[#25D366] text-white px-3 py-2.5 rounded-full shadow-xl hover:bg-[#1ebe5d] transition-all hover:scale-105 active:scale-95"
+    >
+      <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white shrink-0" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      <span className="text-xs font-bold hidden sm:inline">WhatsApp Us</span>
+    </a>
+  );
+}
+
+function AnnouncementStrip() {
+  const [visible, setVisible] = useState(true);
+  if (!visible) return null;
+  return (
+    <div className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-[#FF9933] via-white to-[#138808] text-[#0F172A] text-xs font-semibold flex items-center justify-center gap-2 px-4 py-2">
+      <span>🇮🇳</span>
+      <span className="text-center text-[#0F172A]">Bharat ka #1 Coaching ERP — AI-powered doubt resolution ab live hai! <a href="#features" className="underline font-bold ml-1 text-blue-700">Explore now →</a></span>
+      <button onClick={() => setVisible(false)} aria-label="Dismiss" className="ml-2 p-0.5 hover:opacity-70 shrink-0"><X className="w-3.5 h-3.5" /></button>
+    </div>
+  );
+}
+
 /* ─── Animated Counter ─────────────────────────────────────────── */
 function AnimatedCounter({ target, suffix = "", prefix = "" }: { target: number; suffix?: string; prefix?: string }) {
   const [count, setCount] = useState(0);
@@ -175,10 +207,10 @@ export default function Landing() {
   ];
 
   const testimonials = [
-    { name: "Pradeep Sharma", role: "Director, BrightMinds Academy", rating: 5, quote: "EduCore transformed how we run our 3 coaching centres. Fee collection, attendance, and student tracking are now seamless. Our admin effort dropped by 70%.", avatar: "PS" },
-    { name: "Ananya Gupta", role: "Physics Teacher, TopRanker Institute", rating: 5, quote: "The doubt resolution feature is a game-changer. I can answer 20+ student doubts in the time it used to take me to answer 5. My students' scores have improved dramatically.", avatar: "AG" },
-    { name: "Rohit Mehta", role: "Student, NEET Batch 2025", rating: 5, quote: "I love the adaptive mock tests. The system knows exactly where I'm weak and keeps drilling me there. My rank jumped from #450 to #89 in just 3 months!", avatar: "RM" },
-    { name: "Meera Patel", role: "Centre Manager, StudyHub", rating: 5, quote: "EduCore's analytics dashboard gives our management team unprecedented visibility. We can spot at-risk students early and intervene. Highly recommended.", avatar: "MP" },
+    { name: "Pradeep Sharma", role: "Director, BrightMinds Academy, Kota", rating: 5, quote: "Hamare 3 coaching centres ka poora kaam EduCore ne badal diya. Fee collection, attendance, student tracking — sab seamless. Admin effort 70% kam ho gaya.", avatar: "PS" },
+    { name: "Ananya Gupta", role: "Physics Teacher, TopRanker Institute, Patna", rating: 5, quote: "Doubt resolution feature ne meri life badal di. Pehle 5 doubts solve karne mein jo time lagta tha, ab 20+ ho jaate hain. Mere students ke scores dramatically improve hue hain.", avatar: "AG" },
+    { name: "Rohit Mehta", role: "Student, NEET Batch 2025, Jaipur", rating: 5, quote: "Adaptive mock tests ne mujhe exactly pata chala kahan weak hoon. 3 mahine mein rank #450 se #89 ho gaya! Maa-baap ki aankhon mein jo khushi thi, woh priceless hai.", avatar: "RM" },
+    { name: "Meera Patel", role: "Centre Manager, StudyHub, Surat", rating: 5, quote: "EduCore ka analytics dashboard hamari team ko pehle se hi at-risk students dikhata hai. Bharat ke har chhote sheher ke coaching centre ko yeh chahiye.", avatar: "MP" },
   ];
 
   const stats = [
@@ -190,11 +222,13 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <AnnouncementStrip />
+      <WhatsAppButton />
 
       {/* ── NAVBAR ─────────────────────────────────────────────────── */}
       <header role="banner">
         <nav
-          className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          className={`fixed top-8 left-0 right-0 z-50 transition-all duration-300 ${
             scrolled ? "bg-white/95 backdrop-blur-md shadow-md border-b border-blue-100" : "bg-transparent"
           }`}
           aria-label="Primary navigation"
@@ -229,13 +263,14 @@ export default function Landing() {
               {/* Desktop CTA */}
               <div className="hidden md:flex items-center gap-3">
                 <Link href="/login">
-                  <button className="px-5 py-2 text-sm font-semibold text-[#2563EB] border-2 border-[#2563EB] rounded-xl hover:bg-blue-50 transition-colors">
-                    Login
+                  <button className="px-5 py-2 text-sm font-bold bg-[#2563EB] text-white rounded-xl hover:bg-[#1E40AF] transition-colors shadow-md flex items-center gap-1.5">
+                    <GraduationCap className="w-3.5 h-3.5" />
+                    Client Portal
                   </button>
                 </Link>
-                <Link href="/login?role=student">
-                  <button className="px-5 py-2 text-sm font-bold bg-[#2563EB] text-white rounded-xl hover:bg-[#1E40AF] transition-colors shadow-md hover:shadow-lg">
-                    Get Started Free
+                <Link href="/login">
+                  <button className="px-5 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">
+                    Try Free Demo
                   </button>
                 </Link>
               </div>
@@ -274,13 +309,14 @@ export default function Landing() {
                   ))}
                   <div className="pt-2 pb-1 flex flex-col gap-2">
                     <Link href="/login">
-                      <button className="w-full py-3 text-sm font-semibold text-blue-600 border-2 border-blue-600 rounded-xl hover:bg-blue-50 transition-colors">
-                        Login
+                      <button className="w-full py-3 text-sm font-bold bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5">
+                        <GraduationCap className="w-3.5 h-3.5" />
+                        Client Portal
                       </button>
                     </Link>
-                    <Link href="/login?role=student">
-                      <button className="w-full py-3 text-sm font-bold bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors">
-                        Get Started Free
+                    <Link href="/login">
+                      <button className="w-full py-3 text-sm font-semibold text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors">
+                        Try Free Demo
                       </button>
                     </Link>
                   </div>
@@ -293,7 +329,7 @@ export default function Landing() {
 
       {/* ── HERO ──────────────────────────────────────────────────── */}
       <main>
-        <section className="relative pt-28 md:pt-36 pb-20 px-4 hero-gradient overflow-hidden" aria-labelledby="hero-heading">
+        <section className="relative pt-36 md:pt-44 pb-20 px-4 hero-gradient overflow-hidden" aria-labelledby="hero-heading">
           <FloatingBlobs />
 
           <div className="max-w-7xl mx-auto relative z-10">
@@ -305,8 +341,8 @@ export default function Landing() {
                 transition={{ duration: 0.5 }}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-sm font-bold mb-8 shadow-sm"
               >
-                <Sparkles className="w-4 h-4 text-blue-500 animate-pulse" />
-                #1 ERP Platform for Coaching Institutes in India
+                <span>🇮🇳</span>
+                Proudly Built for Bharat's Coaching Institutes
                 <span className="flex items-center gap-1 text-yellow-600">
                   <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
                   4.8
@@ -321,19 +357,9 @@ export default function Landing() {
                 transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
                 className="text-4xl sm:text-5xl md:text-7xl font-black mb-6 tracking-tight leading-[1.1] text-[#0F172A]"
               >
-                The Complete{" "}
-                <span className="text-gradient">ERP Platform</span>
-                <br className="hidden sm:block" />
-                {" "}for{" "}
-                <span className="relative inline-block">
-                  Coaching Institutes
-                  <motion.div
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ delay: 0.9, duration: 0.6, ease: "easeOut" }}
-                    className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-sky-400 rounded-full origin-left"
-                  />
-                </span>
+                Har Bacche Ka Sapna
+                <br />
+                <span className="text-gradient">Poora Karo</span>
               </motion.h1>
 
               {/* Subtext */}
@@ -343,8 +369,9 @@ export default function Landing() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed"
               >
-                EduCore unifies students, teachers, and management into one powerful system. 
-                Video lectures, mock tests, fee collection, attendance — all in one platform.
+                From Kota to Kanpur, from small-town coaching centres to big-city institutes —
+                EduCore brings every student, teacher, and director onto one powerful platform.
+                <span className="block mt-2 text-base text-slate-500">Video lectures · Mock tests · Fee collection · Attendance — sab ek jagah.</span>
               </motion.p>
 
               {/* CTAs */}
@@ -352,16 +379,16 @@ export default function Landing() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.45 }}
-                className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6"
+                className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6"
               >
-                <Link href="/login?role=student">
-                  <button className="group w-full sm:w-auto px-8 py-4 text-base font-bold bg-[#2563EB] text-white rounded-2xl shadow-lg hover:bg-[#1E40AF] hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
-                    Start for Free
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <Link href="/login">
+                  <button className="group w-full sm:w-auto px-6 py-3.5 text-sm font-bold bg-[#2563EB] text-white rounded-2xl shadow-lg hover:bg-[#1E40AF] hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                    Try Free Demo
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </Link>
-                <a href="#features">
-                  <button className="w-full sm:w-auto px-8 py-4 text-base font-bold border-2 border-[#2563EB] text-[#2563EB] rounded-2xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2">
+                <a href="#features" className="w-full sm:w-auto">
+                  <button className="w-full px-6 py-3.5 text-sm font-bold border-2 border-[#2563EB] text-[#2563EB] rounded-2xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2">
                     <Play className="w-4 h-4 fill-current" />
                     See How It Works
                   </button>
@@ -374,7 +401,7 @@ export default function Landing() {
                 transition={{ delay: 0.6 }}
                 className="text-sm text-slate-500 mb-16"
               >
-                No credit card required · Free 14-day trial · Setup in minutes
+                No credit card required · Free 14-day trial · Setup in minutes · 🇮🇳 Made in India
               </motion.p>
 
               {/* Hero Dashboard Mock */}
@@ -418,13 +445,13 @@ export default function Landing() {
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 0.7 + i * 0.1 }}
-                          className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm"
+                          className="bg-white rounded-xl p-3 border border-slate-100 shadow-sm"
                         >
-                          <div className={`w-8 h-8 ${stat.bg} rounded-xl flex items-center justify-center mb-2`}>
-                            <stat.icon className={`w-4 h-4 ${stat.color}`} />
+                          <div className={`w-7 h-7 ${stat.bg} rounded-lg flex items-center justify-center mb-1.5`}>
+                            <stat.icon className={`w-3.5 h-3.5 ${stat.color}`} />
                           </div>
-                          <p className="text-xs text-slate-500 font-medium">{stat.label}</p>
-                          <p className="text-lg font-bold text-[#0F172A] mt-0.5">{stat.value}</p>
+                          <p className="text-[10px] text-slate-500 font-medium">{stat.label}</p>
+                          <p className="text-sm font-bold text-[#0F172A] mt-0.5">{stat.value}</p>
                         </motion.div>
                       ))}
                     </div>
@@ -509,6 +536,9 @@ export default function Landing() {
         {/* ── STATS BANNER ─────────────────────────────────────────── */}
         <section className="py-14 px-4 bg-[#2563EB]" aria-label="Platform statistics">
           <div className="max-w-7xl mx-auto">
+            <FadeIn className="text-center mb-6">
+              <p className="text-blue-200 text-sm font-semibold">🇮🇳 Bharat ke coaching institutes ka bharosa</p>
+            </FadeIn>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0 md:divide-x divide-blue-500">
               {stats.map((stat, i) => (
                 <FadeIn key={i} delay={i * 0.1}>
@@ -531,9 +561,10 @@ export default function Landing() {
         {/* ── TRUST BAR ────────────────────────────────────────────── */}
         <section className="py-10 bg-white border-b border-slate-100 px-4" aria-label="Trusted by">
           <div className="max-w-7xl mx-auto text-center">
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">
-              Trusted by 500+ coaching institutes across India
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+              Trusted by 500+ coaching institutes across Bharat
             </p>
+            <p className="text-xs text-slate-400 mb-6">Kota · Patna · Hyderabad · Jaipur · Lucknow · Pune · Indore · Surat</p>
             <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6">
               {["DreamEdu", "BrightMinds", "TopRanker Institute", "StudyHub", "Excel Academy", "Merit Classes"].map((name) => (
                 <div key={name} className="px-5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-500 font-bold text-sm hover:border-blue-300 hover:text-blue-600 transition-colors cursor-default">
@@ -656,29 +687,29 @@ export default function Landing() {
         </section>
 
         {/* ── PLATFORM FEATURES GRID ──────────────────────────────── */}
-        <section className="py-24 px-4 bg-white" aria-labelledby="platform-features-heading">
+        <section className="py-16 px-4 bg-white" aria-labelledby="platform-features-heading">
           <div className="max-w-7xl mx-auto">
-            <FadeIn className="text-center mb-14">
-              <span className="inline-block px-4 py-1.5 bg-sky-50 text-sky-600 text-sm font-bold rounded-full border border-sky-200 mb-5">
+            <FadeIn className="text-center mb-10">
+              <span className="inline-block px-4 py-1.5 bg-sky-50 text-sky-600 text-sm font-bold rounded-full border border-sky-200 mb-4">
                 All Modules Included
               </span>
-              <h2 id="platform-features-heading" className="text-3xl md:text-5xl font-black text-[#0F172A] mb-4">
+              <h2 id="platform-features-heading" className="text-2xl md:text-4xl font-black text-[#0F172A] mb-3">
                 Everything Your Institute Needs
               </h2>
-              <p className="text-lg text-slate-500 max-w-2xl mx-auto">
+              <p className="text-base text-slate-500 max-w-2xl mx-auto">
                 9 powerful modules. Zero integrations needed. All included in every plan.
               </p>
             </FadeIn>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
               {features.map((f, i) => (
                 <FadeIn key={i} delay={i * 0.05}>
-                  <article className="bg-white border border-slate-200 rounded-2xl p-6 hover:shadow-xl hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 group cursor-pointer">
-                    <div className={`w-12 h-12 ${f.bg} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                      <f.icon className={`w-6 h-6 ${f.color}`} />
+                  <article className="bg-white border border-slate-200 rounded-xl p-4 md:p-6 hover:shadow-xl hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 group cursor-pointer">
+                    <div className={`w-9 h-9 md:w-12 md:h-12 ${f.bg} rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
+                      <f.icon className={`w-4 h-4 md:w-6 md:h-6 ${f.color}`} />
                     </div>
-                    <h3 className="font-bold text-base text-[#0F172A] mb-2">{f.title}</h3>
-                    <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>
+                    <h3 className="font-bold text-sm md:text-base text-[#0F172A] mb-1">{f.title}</h3>
+                    <p className="text-xs md:text-sm text-slate-500 leading-relaxed hidden sm:block">{f.desc}</p>
                   </article>
                 </FadeIn>
               ))}
@@ -750,31 +781,32 @@ export default function Landing() {
           <div className="max-w-7xl mx-auto">
             <FadeIn className="text-center mb-14">
               <span className="inline-block px-4 py-1.5 bg-blue-50 text-blue-600 text-sm font-bold rounded-full border border-blue-200 mb-5">
-                Success Stories
+                🇮🇳 Real Stories from Real Institutes
               </span>
-              <h2 id="testimonials-heading" className="text-3xl md:text-5xl font-black text-[#0F172A] mb-4">
-                Loved by Institutes Across India
+              <h2 id="testimonials-heading" className="text-3xl md:text-5xl font-black text-[#0F172A] mb-2">
+                Dil Se — Loved Across Bharat
               </h2>
+              <p className="text-slate-500 text-sm mb-4">From small-town coaching centres to city institutes, EduCore is changing lives.</p>
               <div className="flex items-center justify-center gap-1 mb-3">
                 {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}
                 <span className="ml-2 text-slate-600 font-bold">4.8 / 5 from 1,247 reviews</span>
               </div>
             </FadeIn>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {testimonials.map((t, i) => (
                 <FadeIn key={i} delay={i * 0.1}>
-                  <blockquote className="bg-[#F8FAFC] border border-slate-200 rounded-2xl p-7 hover:shadow-lg hover:border-blue-200 transition-all duration-300 h-full flex flex-col">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[1,2,3,4,5].map(j => <Star key={j} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
+                  <blockquote className="bg-[#F8FAFC] border border-slate-200 rounded-xl p-5 hover:shadow-lg hover:border-blue-200 transition-all duration-300 h-full flex flex-col">
+                    <div className="flex items-center gap-1 mb-3">
+                      {[1,2,3,4,5].map(j => <Star key={j} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />)}
                     </div>
-                    <p className="text-slate-700 leading-relaxed mb-6 flex-1 italic">"{t.quote}"</p>
+                    <p className="text-slate-700 text-sm leading-relaxed mb-4 flex-1 italic">"{t.quote}"</p>
                     <footer className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-full bg-gradient-to-br from-blue-600 to-sky-500 flex items-center justify-center text-white font-bold text-sm shrink-0">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-sky-500 flex items-center justify-center text-white font-bold text-xs shrink-0">
                         {t.avatar}
                       </div>
                       <div>
-                        <cite className="font-bold text-[#0F172A] not-italic">{t.name}</cite>
+                        <cite className="font-bold text-sm text-[#0F172A] not-italic">{t.name}</cite>
                         <p className="text-xs text-slate-500">{t.role}</p>
                       </div>
                     </footer>
@@ -818,29 +850,29 @@ export default function Landing() {
               </div>
             </FadeIn>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
               {/* Starter */}
               <FadeIn>
-                <div className="bg-white rounded-3xl border-2 border-slate-200 p-8 flex flex-col hover:border-blue-300 hover:shadow-xl transition-all duration-300">
-                  <h3 className="text-xl font-black text-[#0F172A] mb-2">Starter</h3>
-                  <p className="text-sm text-slate-500 mb-6 h-10">Perfect for small coaching centers</p>
-                  <div className="mb-6">
+                <div className="bg-white rounded-2xl border-2 border-slate-200 p-5 md:p-8 flex flex-col hover:border-blue-300 hover:shadow-xl transition-all duration-300">
+                  <h3 className="text-lg font-black text-[#0F172A] mb-1">Starter</h3>
+                  <p className="text-xs text-slate-500 mb-4">Perfect for small coaching centers</p>
+                  <div className="mb-4">
                     <div className="flex items-end gap-1">
-                      <span className="text-4xl font-black text-[#0F172A]">₹{billingCycle === "monthly" ? "2,999" : "2,399"}</span>
-                      <span className="text-slate-500 pb-1">/mo</span>
+                      <span className="text-3xl font-black text-[#0F172A]">₹{billingCycle === "monthly" ? "2,999" : "2,399"}</span>
+                      <span className="text-slate-500 pb-1 text-sm">/mo</span>
                     </div>
-                    {billingCycle === "yearly" && <p className="text-xs text-blue-600 font-bold mt-1">Billed annually (save ₹7,200/yr)</p>}
+                    {billingCycle === "yearly" && <p className="text-xs text-blue-600 font-bold mt-1">Save ₹7,200/yr</p>}
                   </div>
-                  <ul className="space-y-3 mb-8 flex-1">
+                  <ul className="space-y-2 mb-6 flex-1">
                     {["Up to 100 students", "5 teacher accounts", "All core modules", "Email & chat support", "Basic analytics"].map((f) => (
-                      <li key={f} className="flex items-center gap-2.5 text-sm">
-                        <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                      <li key={f} className="flex items-center gap-2 text-xs">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                         <span className="text-slate-700">{f}</span>
                       </li>
                     ))}
                   </ul>
                   <Link href="/login">
-                    <button className="w-full py-3.5 rounded-xl border-2 border-[#2563EB] text-[#2563EB] font-bold hover:bg-blue-50 transition-colors">
+                    <button className="w-full py-3 rounded-xl border-2 border-[#2563EB] text-[#2563EB] font-bold text-sm hover:bg-blue-50 transition-colors">
                       Start Free Trial
                     </button>
                   </Link>
@@ -849,29 +881,29 @@ export default function Landing() {
 
               {/* Growth — Most Popular */}
               <FadeIn delay={0.1}>
-                <div className="relative bg-[#2563EB] rounded-3xl border-none p-8 flex flex-col shadow-2xl md:-translate-y-4 hover:-translate-y-6 transition-transform duration-300">
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-sky-400 text-[#0F172A] px-5 py-1.5 rounded-full text-xs font-black uppercase tracking-wide shadow-lg">
+                <div className="relative bg-[#2563EB] rounded-2xl border-none p-5 md:p-8 flex flex-col shadow-2xl md:-translate-y-4 hover:md:-translate-y-6 transition-transform duration-300">
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-sky-400 text-[#0F172A] px-4 py-1 rounded-full text-xs font-black uppercase tracking-wide shadow-lg">
                     Most Popular
                   </div>
-                  <h3 className="text-xl font-black text-white mb-2">Growth</h3>
-                  <p className="text-blue-200 text-sm mb-6 h-10">For growing institutes up to 500 students</p>
-                  <div className="mb-6">
+                  <h3 className="text-lg font-black text-white mb-1">Growth</h3>
+                  <p className="text-blue-200 text-xs mb-4">For growing institutes up to 500 students</p>
+                  <div className="mb-4">
                     <div className="flex items-end gap-1">
-                      <span className="text-4xl font-black text-white">₹{billingCycle === "monthly" ? "6,999" : "5,599"}</span>
-                      <span className="text-blue-300 pb-1">/mo</span>
+                      <span className="text-3xl font-black text-white">₹{billingCycle === "monthly" ? "6,999" : "5,599"}</span>
+                      <span className="text-blue-300 pb-1 text-sm">/mo</span>
                     </div>
-                    {billingCycle === "yearly" && <p className="text-xs text-sky-300 font-bold mt-1">Billed annually (save ₹16,800/yr)</p>}
+                    {billingCycle === "yearly" && <p className="text-xs text-sky-300 font-bold mt-1">Save ₹16,800/yr</p>}
                   </div>
-                  <ul className="space-y-3 mb-8 flex-1">
-                    {["Up to 500 students", "25 teacher accounts", "Advanced analytics & reports", "Priority support (4hr SLA)", "Custom branding", "Fee management & GST", "QR attendance system"].map((f) => (
-                      <li key={f} className="flex items-center gap-2.5 text-sm">
-                        <CheckCircle2 className="w-4 h-4 text-sky-300 shrink-0" />
+                  <ul className="space-y-2 mb-6 flex-1">
+                    {["Up to 500 students", "25 teacher accounts", "Advanced analytics", "Priority support (4hr SLA)", "Custom branding", "Fee management & GST", "QR attendance system"].map((f) => (
+                      <li key={f} className="flex items-center gap-2 text-xs">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-sky-300 shrink-0" />
                         <span className="text-blue-100">{f}</span>
                       </li>
                     ))}
                   </ul>
                   <Link href="/login">
-                    <button className="w-full py-3.5 rounded-xl bg-sky-400 text-[#0F172A] font-bold hover:bg-sky-300 transition-colors shadow-lg">
+                    <button className="w-full py-3 rounded-xl bg-sky-400 text-[#0F172A] font-bold text-sm hover:bg-sky-300 transition-colors shadow-lg">
                       Get Started
                     </button>
                   </Link>
@@ -880,24 +912,22 @@ export default function Landing() {
 
               {/* Enterprise */}
               <FadeIn delay={0.2}>
-                <div className="bg-white rounded-3xl border-2 border-slate-200 p-8 flex flex-col hover:border-blue-300 hover:shadow-xl transition-all duration-300">
-                  <h3 className="text-xl font-black text-[#0F172A] mb-2">Enterprise</h3>
-                  <p className="text-sm text-slate-500 mb-6 h-10">For large institutes with 500+ students</p>
-                  <div className="mb-6">
-                    <div className="flex items-end gap-1">
-                      <span className="text-4xl font-black text-[#0F172A]">Custom</span>
-                    </div>
+                <div className="bg-white rounded-2xl border-2 border-slate-200 p-5 md:p-8 flex flex-col hover:border-blue-300 hover:shadow-xl transition-all duration-300">
+                  <h3 className="text-lg font-black text-[#0F172A] mb-1">Enterprise</h3>
+                  <p className="text-xs text-slate-500 mb-4">For large institutes with 500+ students</p>
+                  <div className="mb-4">
+                    <span className="text-3xl font-black text-[#0F172A]">Custom</span>
                     <p className="text-xs text-slate-400 mt-1">Tailored to your needs</p>
                   </div>
-                  <ul className="space-y-3 mb-8 flex-1">
-                    {["Unlimited students & teachers", "Dedicated account manager", "Custom integrations & API", "White-label solution", "SLA-backed uptime (99.9%)", "On-premise deployment option"].map((f) => (
-                      <li key={f} className="flex items-center gap-2.5 text-sm">
-                        <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <ul className="space-y-2 mb-6 flex-1">
+                    {["Unlimited students & teachers", "Dedicated account manager", "Custom integrations & API", "White-label solution", "SLA-backed uptime (99.9%)", "On-premise deployment"].map((f) => (
+                      <li key={f} className="flex items-center gap-2 text-xs">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                         <span className="text-slate-700">{f}</span>
                       </li>
                     ))}
                   </ul>
-                  <button className="w-full py-3.5 rounded-xl border-2 border-[#1E40AF] text-[#1E40AF] font-bold hover:bg-blue-50 transition-colors">
+                  <button className="w-full py-3 rounded-xl border-2 border-[#1E40AF] text-[#1E40AF] font-bold text-sm hover:bg-blue-50 transition-colors">
                     Contact Sales
                   </button>
                 </div>
@@ -923,15 +953,16 @@ export default function Landing() {
 
                 <div className="relative z-10">
                   <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-4 py-1.5 text-white text-sm font-bold mb-6">
-                    <Sparkles className="w-4 h-4 text-sky-300" />
-                    Live Demo Available — No Sign-up Required
+                    <span>🇮🇳</span>
+                    Bharat ka apna ERP — Live Demo, No Sign-up
                   </div>
-                  <h2 className="text-3xl md:text-5xl font-black text-white mb-5">
-                    Ready to Transform Your Institute?
+                  <h2 className="text-3xl md:text-5xl font-black text-white mb-3">
+                    Apne Institute Ko Aage Badhao
                   </h2>
-                  <p className="text-blue-100 text-lg max-w-2xl mx-auto mb-10">
-                    Explore EduCore with real features, real data, and zero commitments. 
-                    See why 500+ institutes made the switch.
+                  <p className="text-sky-200 text-base font-semibold mb-3">Your institute. Your students. Your pride.</p>
+                  <p className="text-blue-100 text-base max-w-2xl mx-auto mb-10">
+                    Har bacche ka rank upar jaaye, har teacher ka kaam aasaan ho, har director ka institute grow kare —
+                    yahi hai EduCore ka vaada. 500+ institutes already on board.
                   </p>
 
                   <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -959,59 +990,67 @@ export default function Landing() {
       </main>
 
       {/* ── FOOTER ───────────────────────────────────────────────── */}
-      <footer className="bg-[#0F172A] text-white pt-16 pb-8 px-4" role="contentinfo">
+      <footer className="bg-[#0F172A] text-white pt-10 pb-20 md:pb-10 px-4" role="contentinfo">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 mb-8">
             {/* Brand */}
-            <div className="md:col-span-2">
-              <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-blue-500 flex items-center justify-center">
-                  <GraduationCap className="w-5 h-5 text-white" />
+            <div className="col-span-2">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-600 to-blue-500 flex items-center justify-center shrink-0">
+                  <GraduationCap className="w-4 h-4 text-white" />
                 </div>
-                <span className="font-black text-xl">Edu<span className="text-[#38BDF8]">Core</span></span>
+                <span className="font-black text-lg">Edu<span className="text-[#38BDF8]">Core</span></span>
               </div>
-              <p className="text-slate-400 text-sm leading-relaxed max-w-sm mb-5">
-                India's most trusted ERP platform for coaching institutes. Streamline operations, boost student performance, and grow your institute effortlessly.
+              <p className="text-slate-400 text-xs leading-relaxed mb-4">
+                India's most trusted ERP for coaching institutes. Streamline operations, boost performance, grow effortlessly.
               </p>
-              <div className="flex items-center gap-1">
-                {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
-                <span className="text-slate-400 text-sm ml-2">4.8 · 1,247 reviews</span>
+              <div className="flex items-center gap-1 mb-4">
+                {[1,2,3,4,5].map(i => <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />)}
+                <span className="text-slate-400 text-xs ml-1.5">4.8 · 1,247 reviews</span>
               </div>
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MSG}`}
+                target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#25D366] text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-[#1ebe5d] transition-colors"
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white" aria-hidden="true">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Chat on WhatsApp
+              </a>
             </div>
 
             {/* Product */}
             <div>
-              <h4 className="font-bold text-sm uppercase tracking-wider text-slate-400 mb-4">Product</h4>
-              <ul className="space-y-3 text-sm text-slate-400">
+              <h4 className="font-bold text-xs uppercase tracking-wider text-slate-400 mb-3">Product</h4>
+              <ul className="space-y-2 text-xs text-slate-400">
                 {["Features", "Pricing", "How it Works", "Student Portal", "Teacher Portal", "Management Portal"].map((l) => (
-                  <li key={l}>
-                    <a href="#" className="hover:text-[#38BDF8] transition-colors">{l}</a>
-                  </li>
+                  <li key={l}><a href="#" className="hover:text-[#38BDF8] transition-colors">{l}</a></li>
                 ))}
               </ul>
             </div>
 
             {/* Company */}
             <div>
-              <h4 className="font-bold text-sm uppercase tracking-wider text-slate-400 mb-4">Company</h4>
-              <ul className="space-y-3 text-sm text-slate-400">
+              <h4 className="font-bold text-xs uppercase tracking-wider text-slate-400 mb-3">Company</h4>
+              <ul className="space-y-2 text-xs text-slate-400">
                 {["About Us", "Blog", "Case Studies", "Careers", "Privacy Policy", "Terms of Service"].map((l) => (
-                  <li key={l}>
-                    <a href="#" className="hover:text-[#38BDF8] transition-colors">{l}</a>
-                  </li>
+                  <li key={l}><a href="#" className="hover:text-[#38BDF8] transition-colors">{l}</a></li>
                 ))}
               </ul>
             </div>
           </div>
 
-          <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-slate-500 text-sm text-center md:text-left">
+          <div className="border-t border-slate-800 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <p className="text-slate-500 text-xs text-center sm:text-left">
               © 2025 EduCore Technologies Pvt. Ltd. All rights reserved.
             </p>
-            <div className="flex items-center gap-4">
-              <span className="text-slate-500 text-sm">Made with ❤️ in India</span>
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" title="All systems operational" />
-              <span className="text-slate-500 text-xs">All systems operational</span>
+            <div className="flex items-center gap-3">
+              <span className="text-slate-400 text-xs font-semibold">🇮🇳 Bharat Mein Banaya Gaya — Made with ❤️ in India</span>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-slate-500 text-xs">All systems operational</span>
+              </div>
             </div>
           </div>
         </div>

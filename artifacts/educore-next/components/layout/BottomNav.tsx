@@ -5,30 +5,31 @@ import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard, Video, ClipboardList, MessageCircle, User
 } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 const studentItems = [
-  { href: '/student/dashboard', icon: LayoutDashboard, label: 'Home' },
-  { href: '/student/video/1', icon: Video, label: 'Lectures' },
-  { href: '#', icon: ClipboardList, label: 'Tests' },
-  { href: '/student/doubts', icon: MessageCircle, label: 'Doubts' },
-  { href: '#', icon: User, label: 'Profile' },
+  { href: '/student/dashboard', icon: 'bi-grid-1x2-fill', label: 'Home' },
+  { href: '/student/video', icon: 'bi-play-circle-fill', label: 'Lectures' },
+  { href: '/student/tests', icon: 'bi-clipboard-check-fill', label: 'Tests' },
+  { href: '/student/doubts', icon: 'bi-chat-dots-fill', label: 'Doubts' },
+  { href: '/student/analytics', icon: 'bi-bar-chart-fill', label: 'Pulse' },
 ]
 
 const teacherItems = [
-  { href: '/teacher/dashboard', icon: LayoutDashboard, label: 'Home' },
-  { href: '#', icon: Video, label: 'Classes' },
-  { href: '#', icon: ClipboardList, label: 'Tests' },
-  { href: '#', icon: MessageCircle, label: 'Doubts' },
-  { href: '#', icon: User, label: 'Profile' },
+  { href: '/teacher/dashboard', icon: 'bi-grid-1x2-fill', label: 'Home' },
+  { href: '#', icon: 'bi-broadcast', label: 'Classes' },
+  { href: '#', icon: 'bi-file-earmark-plus-fill', label: 'Tests' },
+  { href: '#', icon: 'bi-chat-dots-fill', label: 'Doubts' },
+  { href: '#', icon: 'bi-person-circle', label: 'Profile' },
 ]
 
 const managementItems = [
-  { href: '/management/dashboard', icon: LayoutDashboard, label: 'Home' },
-  { href: '#', icon: User, label: 'Students' },
-  { href: '#', icon: ClipboardList, label: 'Reports' },
-  { href: '#', icon: MessageCircle, label: 'Alerts' },
-  { href: '#', icon: User, label: 'Profile' },
+  { href: '/management/dashboard', icon: 'bi-speedometer2', label: 'Home' },
+  { href: '#', icon: 'bi-people-fill', label: 'Students' },
+  { href: '#', icon: 'bi-file-earmark-bar-graph-fill', label: 'Reports' },
+  { href: '#', icon: 'bi-bell-fill', label: 'Alerts' },
+  { href: '#', icon: 'bi-person-gear', label: 'Profile' },
 ]
 
 const itemsMap = { student: studentItems, teacher: teacherItems, management: managementItems }
@@ -38,7 +39,7 @@ export default function BottomNav({ role }: { role: 'student' | 'teacher' | 'man
   const items = itemsMap[role]
 
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-100 shadow-lg">
+    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-100 shadow-[0_-4px_10px_rgba(0,0,0,0.03)] safe-area-pb">
       <div className="grid grid-cols-5 h-16">
         {items.map((item) => {
           const active = pathname === item.href
@@ -46,20 +47,27 @@ export default function BottomNav({ role }: { role: 'student' | 'teacher' | 'man
             <Link
               key={item.label}
               href={item.href}
-              className="flex flex-col items-center justify-center gap-1 transition-colors"
+              className="relative flex flex-col items-center justify-center gap-1 transition-colors group"
             >
-              <item.icon
+              {active && (
+                <motion.span 
+                  layoutId="bottom-nav-active"
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-primary-600 rounded-full" 
+                />
+              )}
+              <i
                 className={cn(
-                  'w-5 h-5 transition-all',
-                  active ? 'text-primary-600 scale-110' : 'text-slate-400'
+                  'bi w-5 h-5 flex items-center justify-center text-lg transition-all duration-200 icon-bounce',
+                  item.icon,
+                  active ? 'text-primary-600 scale-110' : 'text-slate-400 group-hover:text-slate-600'
                 )}
               />
-              <span className={cn('text-[10px] font-medium', active ? 'text-primary-600' : 'text-slate-400')}>
+              <span className={cn(
+                'text-[10px] font-bold transition-colors uppercase tracking-widest',
+                active ? 'text-primary-600' : 'text-slate-400'
+              )}>
                 {item.label}
               </span>
-              {active && (
-                <span className="absolute bottom-0 w-1 h-1 bg-primary-600 rounded-full" />
-              )}
             </Link>
           )
         })}

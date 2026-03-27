@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 
 import { AuthProvider, useAuthContext } from "@/context/auth-context";
 
+import LeadCaptureModal from "@/components/LeadCaptureModal";
 import Landing from "@/pages/landing";
 import Login from "@/pages/login";
 import Dashboard from "@/pages/dashboard";
@@ -71,11 +72,24 @@ function Router() {
       <Route path="/teacher/dashboard">
         <ProtectedRoute allowedRole="teacher" component={TeacherDashboard} />
       </Route>
-      <Route path="/teacher/classes"><Redirect to="/teacher/dashboard" /></Route>
-      <Route path="/teacher/assignments"><Redirect to="/teacher/dashboard" /></Route>
-      <Route path="/teacher/doubts"><Redirect to="/teacher/dashboard" /></Route>
-      <Route path="/teacher/students"><Redirect to="/teacher/dashboard" /></Route>
-      <Route path="/teacher/analytics"><Redirect to="/teacher/dashboard" /></Route>
+      <Route path="/teacher/classes">
+        <ProtectedRoute allowedRole="teacher" component={TeacherDashboard} />
+      </Route>
+      <Route path="/teacher/assignments">
+        <ProtectedRoute allowedRole="teacher" component={TeacherDashboard} />
+      </Route>
+      <Route path="/teacher/doubts">
+        <ProtectedRoute allowedRole="teacher" component={TeacherDashboard} />
+      </Route>
+      <Route path="/teacher/analytics">
+        <ProtectedRoute allowedRole="teacher" component={TeacherDashboard} />
+      </Route>
+      <Route path="/teacher/students">
+        <ProtectedRoute allowedRole="teacher" component={TeacherDashboard} />
+      </Route>
+      <Route path="/teacher/settings">
+        <ProtectedRoute allowedRole="teacher" component={TeacherDashboard} />
+      </Route>
 
       {/* Management Routes */}
       <Route path="/management/dashboard">
@@ -102,6 +116,7 @@ function App() {
       <TooltipProvider>
         <AuthProvider>
           <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <LeadCaptureModal />
             <Router />
           </WouterRouter>
         </AuthProvider>

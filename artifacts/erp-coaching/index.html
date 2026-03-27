@@ -12,7 +12,7 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://educore.app/" />
+    <meta property="og:url" content="https://edtech.vmdonline.cloud/" />
     <meta property="og:title" content="EduCore ERP — All-in-One Coaching Institute Management Platform" />
     <meta property="og:description" content="Streamline your coaching institute with EduCore. Student portals, teacher tools, fee management, attendance, video lectures, and deep analytics — all unified in one platform." />
     <meta property="og:site_name" content="EduCore" />
@@ -48,7 +48,7 @@
       "publisher": {
         "@type": "Organization",
         "name": "EduCore Technologies",
-        "url": "https://educore.app"
+        "url": "https://edtech.vmdonline.cloud"
       }
     }
     </script>
@@ -62,6 +62,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <!-- Netlify form detection (required for static Vite builds) -->
+    <form name="educore-leads" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="text" name="institute" />
+      <input type="text" name="city" />
+      <input type="tel" name="mobile" />
+      <input type="text" name="role" />
+    </form>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

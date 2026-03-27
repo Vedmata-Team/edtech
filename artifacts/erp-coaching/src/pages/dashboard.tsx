@@ -340,7 +340,7 @@ export default function Dashboard() {
             <h2 className="text-2xl md:text-3xl font-extrabold text-foreground mb-3">Everything You Need to Succeed</h2>
             <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">EduCore brings your entire learning journey into one powerful platform</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
             {[
               { icon: BookOpen, title: 'Smart Video Lectures', desc: 'HD lectures with subject-specific visual aids. Resume anytime, anywhere across devices.', color: 'text-blue-500', bg: 'bg-blue-500/15' },
               { icon: ClipboardList, title: 'Adaptive Mock Tests', desc: 'AI-powered tests that adapt to your weak areas. Get instant detailed score analysis.', color: 'text-orange-500', bg: 'bg-orange-500/15' },
@@ -355,13 +355,13 @@ export default function Dashboard() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="bg-card rounded-2xl border border-border shadow-sm hover:shadow-md hover:scale-[1.02] transition-all p-6 cursor-pointer"
+                className="bg-card rounded-xl border border-border shadow-sm hover:shadow-md hover:scale-[1.02] transition-all p-4 md:p-6 cursor-pointer"
               >
-                <div className={`w-12 h-12 rounded-xl ${feat.bg} flex items-center justify-center mb-4`}>
-                  <feat.icon className={`w-6 h-6 ${feat.color}`} />
+                <div className={`w-9 h-9 md:w-12 md:h-12 rounded-xl ${feat.bg} flex items-center justify-center mb-3`}>
+                  <feat.icon className={`w-4 h-4 md:w-6 md:h-6 ${feat.color}`} />
                 </div>
-                <h3 className="font-bold text-lg text-foreground mb-2">{feat.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{feat.desc}</p>
+                <h3 className="font-bold text-sm md:text-lg text-foreground mb-1">{feat.title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed hidden sm:block">{feat.desc}</p>
               </motion.div>
             ))}
           </div>

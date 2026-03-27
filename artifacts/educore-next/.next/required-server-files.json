@@ -99,7 +99,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "e:\\Divy\\Projects\\Netlify\\Git\\edtech\\",
+    "outputFileTracingRoot": "e:\\Divy\\Projects\\Netlify\\Git\\edtech",
     "experimental": {
       "useSkewCookie": false,
       "cacheLife": {
@@ -290,7 +290,7 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
     "turbopack": {
-      "root": "e:\\Divy\\Projects\\Netlify\\Git\\edtech\\"
+      "root": "e:\\Divy\\Projects\\Netlify\\Git\\edtech"
     }
   },
   "appDir": "e:\\Divy\\Projects\\Netlify\\Git\\edtech\\artifacts\\educore-next",

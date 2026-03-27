@@ -40,7 +40,7 @@ export function BottomNav() {
   if (navItems.length === 0) return null;
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-card border-t border-border z-50 px-2 sm:px-6 pb-safe">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-blue-100 z-50 px-2 sm:px-6 pb-safe shadow-lg">
       <div className="h-full flex items-center justify-between pb-1">
         {navItems.map((item) => {
           const isActive = location === item.path || (location.startsWith(`/${role}`) && location.includes(item.name.toLowerCase().split(' ')[0]) && item.path !== `/${role}/dashboard`);
@@ -51,20 +51,20 @@ export function BottomNav() {
                 {isActive && (
                   <motion.div 
                     layoutId="bottom-nav-indicator"
-                    className="absolute inset-0 bg-accent/20 rounded-xl -z-10"
+                    className="absolute inset-0 bg-blue-100 rounded-xl -z-10"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
                 <item.icon 
                   className={cn(
                     "w-5 h-5 transition-colors duration-200", 
-                    isActive ? "text-accent-foreground" : "text-muted-foreground group-hover:text-foreground"
+                    isActive ? "text-[#2563EB]" : "text-slate-400 group-hover:text-slate-700"
                   )} 
                 />
                 <span 
                   className={cn(
-                    "text-[10px] mt-0.5 font-medium transition-colors truncate w-full text-center px-1",
-                    isActive ? "text-accent-foreground" : "text-muted-foreground"
+                    "text-[10px] mt-0.5 font-bold transition-colors truncate w-full text-center px-1",
+                    isActive ? "text-[#2563EB]" : "text-slate-400"
                   )}
                 >
                   {item.name}

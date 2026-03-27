@@ -1,0 +1,9 @@
+packages:
+  "framer-motion": "For page transitions, staggered entrances, and smooth UI animations"
+  "recharts": "For the performance area chart on the dashboard"
+  "date-fns": "For formatting dates and calculating countdowns"
+
+notes:
+  - Application uses static mock data as per requirements, no real backend calls are made.
+  - Using framer-motion for all requested animations (page transitions, progress bars, staggered loads).
+  - Dark mode implemented via a custom hook toggling the 'dark' class on the document root.

@@ -1,0 +1,153 @@
+Create a modern, premium, animated frontend demo for an All-in-One Coaching + School ERP SaaS Platform using Next.js (App Router), Tailwind CSS, ShadCN UI, and Framer Motion.
+
+The design should be minimal like Flipkart, but with subtle dynamic animations and micro-interactions. Avoid heavy animations. Focus on smooth, fast, and premium UI.
+
+🎨 THEME & DESIGN SYSTEM:
+
+Primary Color: #5A3E2B (Deep Brown)
+Accent Color: #FFB800 (Neon Yellow highlight)
+Background: #F9F7F4
+Card Background: White
+Border Radius: 16px–20px
+Soft shadows (not harsh)
+Use clean typography (Inter or similar)
+
+📱 RESPONSIVE DESIGN:
+
+Fully responsive (mobile-first)
+Mobile should have bottom navigation bar
+Desktop should have collapsible sidebar
+
+🧭 NAVIGATION:
+
+Desktop Sidebar:
+
+Dashboard
+Courses
+Tests
+Doubts
+Analytics
+Settings
+
+Mobile Bottom Navigation:
+
+Home
+Courses
+Tests
+Doubts
+Profile
+
+Add active state highlight + smooth transition.
+
+🏠 MAIN DASHBOARD PAGE (STUDENT VIEW):
+
+Create a beautiful dashboard with sections:
+
+Top Welcome Section:
+Greeting text (e.g. "Welcome back, Student")
+Small animated stats cards:
+Study Time Today
+Rank
+Tests Completed
+"Continue Learning" Section:
+Horizontal scrollable cards
+Each card contains:
+Thumbnail
+Title
+Progress bar (animated)
+Resume button
+"Upcoming Tests" Section:
+Cards with countdown timer (dynamic)
+Minimal animation
+Performance Section:
+Graph (mock data)
+Improvement percentage
+
+🧩 CARD DESIGN (VERY IMPORTANT):
+
+All cards must follow:
+
+Minimal design
+One dynamic element only (progress bar, timer, or stat)
+Hover effect:
+Slight scale (1.02–1.05)
+Shadow increase
+
+Example Lecture Card:
+
+Thumbnail
+Title
+"65% completed"
+Animated progress bar
+Resume button with hover glow
+
+🎥 VIDEO PLAYER PAGE (DEMO UI):
+
+Create a mock video player page:
+
+Video placeholder
+Below video:
+Title
+Progress %
+"Continue from 12:32"
+Floating buttons:
+Ask Doubt
+Notes
+
+💬 DOUBT / CHAT UI:
+
+Split layout:
+Left: Subject list
+Right: Chat area
+Chat bubbles:
+Student vs Teacher
+Add:
+"Typing..." animation
+Timestamp
+Input box with send button
+
+⚡ ANIMATIONS:
+
+Use Framer Motion:
+
+Card hover: scale up slightly
+Buttons: subtle glow
+Progress bar: smooth width animation
+Page transitions: fade/slide
+
+DO NOT overuse animations.
+
+🧱 COMPONENT STRUCTURE:
+
+Organize code cleanly:
+
+/components/ui
+
+Card
+Button
+ProgressBar
+
+/components/layout
+
+Sidebar
+BottomNav
+
+/components/dashboard
+
+StatsCard
+CourseCard
+
+⚙️ EXTRA FEATURES:
+
+Skeleton loaders for loading states
+Dark mode toggle
+Mock data (no backend needed)
+Clean reusable components
+
+🎯 FINAL OUTPUT:
+
+Fully working Next.js frontend demo
+Clean folder structure
+Reusable components
+Modern SaaS-level UI
+No backend required (use mock/static data)

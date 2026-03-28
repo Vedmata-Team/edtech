@@ -128,23 +128,81 @@ const SubjectCombinationAnimation = () => {
 
 const plans = [
   {
-    name: 'Starter', price: { monthly: 2999, yearly: 2399 },
-    desc: 'Perfect for small coaching centers',
-    features: ['Up to 200 students', '5 teacher accounts', 'Basic analytics', 'Fee management', 'WhatsApp alerts', 'Email support'],
-    cta: 'Start Free Trial', highlight: false,
+    name: 'Starter', 
+    id: 'starter',
+    price: { monthly: 999, yearly: 10000 },
+    sub: 'Built for emerging institutes aiming for structured growth',
+    features: [
+      'Up to 300 students',
+      'Up to 5 teacher accounts',
+      'Smart fee management system',
+      'WhatsApp & notification alerts',
+      'Performance tracking dashboard',
+      'Structured data insights',
+      'Email support'
+    ],
+    cta: 'Start Free Trial',
+    btnClass: 'btn-outline-primary',
+    cardClass: 'border-primary-subtle',
+    color: '#2563EB'
   },
   {
-    name: 'Professional', price: { monthly: 4999, yearly: 3999 },
-    desc: 'Most popular for growing institutes',
-    features: ['Up to 1000 students', '20 teacher accounts', 'Live classes & recording', 'Mock test series', 'Advanced analytics', 'Priority support'],
-    cta: 'Start Free Trial', highlight: true,
+    name: 'Growth', 
+    id: 'growth',
+    price: { monthly: 2999, yearly: 30000 },
+    sub: 'Designed for institutes scaling their academic operations',
+    isPopular: true,
+    features: [
+      'Up to 800 students',
+      'Up to 15 teacher accounts',
+      'Live classes with recordings',
+      'Mock test engine',
+      'Advanced analytics dashboard',
+      'Doubt resolution system',
+      'Automation tools'
+    ],
+    cta: 'Get Started',
+    btnClass: 'btn-primary',
+    cardClass: 'shadow-lg border-primary',
+    color: '#8B5CF6'
   },
   {
-    name: 'Enterprise', price: { monthly: 6999, yearly: 5599 },
-    desc: 'For large institutes with multiple branches',
-    features: ['Unlimited students', 'Unlimited teachers', 'Multi-branch management', 'Custom branding', 'API access', 'Dedicated account manager'],
-    cta: 'Book a Demo', highlight: false,
+    name: 'Pro', 
+    id: 'pro',
+    price: { monthly: 4999, yearly: 50000 },
+    sub: 'For high-performance institutes focused on results and efficiency',
+    features: [
+      'Up to 2000 students',
+      'Up to 40 teacher accounts',
+      'Full automation suite',
+      'Teacher performance tracking',
+      'CRM & lead management',
+      'Deep performance analytics',
+      'Priority support'
+    ],
+    cta: 'Upgrade Now',
+    btnClass: 'btn-warning',
+    cardClass: 'border-warning-subtle',
+    color: '#F59E0B'
   },
+  {
+    name: 'Enterprise', 
+    id: 'enterprise',
+    price: { monthly: 6999, yearly: 70000 },
+    sub: 'A complete digital infrastructure for multi-branch institutions',
+    features: [
+      'Unlimited students & teachers',
+      'Multi-branch management',
+      'Custom branding',
+      'API integrations',
+      'Dedicated account manager',
+      'Advanced reporting & control'
+    ],
+    cta: 'Book a Demo',
+    btnClass: 'btn-danger',
+    cardClass: 'border-danger-subtle',
+    color: '#EF4444'
+  }
 ]
 
 const automationSteps = [
@@ -576,8 +634,8 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Teacher Dashboard */}
-            <div className="flex flex-col lg:flex-row items-center gap-16">
+            {/* Teacher Dashboard (Image Left - Alternating) */}
+            <div className="flex flex-col lg:flex-row-reverse items-center gap-16">
               <div className="flex-1">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-2xl mb-6 shadow-xl">
                   <Icon name="person-workspace" />
@@ -602,14 +660,14 @@ export default function LandingPage() {
               </div>
               <div className="flex-1 relative">
                 <motion.div
-                  initial={{ opacity: 0, x: 50, scale: 0.9 }}
+                  initial={{ opacity: 0, x: -50, scale: 0.9 }}
                   whileInView={{ opacity: 1, x: 0, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8 }}
                   className="relative group"
                 >
                   <img src="/images/teacher_preview.png" alt="Teacher Dashboard" className="rounded-[40px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)] border border-slate-100 transition-transform duration-500 group-hover:scale-[1.02]" />
-                  <div className="absolute inset-0 rounded-[40px] bg-gradient-to-tl from-primary-600/20 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 rounded-[40px] bg-gradient-to-tl from-emerald-600/20 to-transparent pointer-events-none" />
                 </motion.div>
               </div>
             </div>
@@ -827,64 +885,106 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 🚀 5. PRICING / LICENSING Section */}
-      <section id="pricing" className="py-24 bg-slate-50 border-y border-slate-100">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-[10px] font-extrabold uppercase text-primary-600 tracking-[0.4em] mb-4">Investment Node</h2>
-            <p className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">Scale-friendly <span className="text-primary-600">Pricing.</span></p>
-            <div className="mt-8 flex items-center justify-center gap-4">
-              <span className={cn("text-xs font-extrabold uppercase tracking-widest", isMonthly ? "text-slate-900" : "text-slate-400")}>Monthly</span>
-              <button 
-                onClick={() => setIsMonthly(!isMonthly)}
-                className="w-14 h-7 bg-slate-200 rounded-full relative p-1 transition-colors hover:bg-slate-300"
-              >
-                <motion.div 
-                  animate={{ x: isMonthly ? 0 : 28 }}
-                  className="w-5 h-5 bg-white rounded-full shadow-md"
-                />
-              </button>
-              <span className={cn("text-xs font-extrabold uppercase tracking-widest", !isMonthly ? "text-primary-600" : "text-slate-400")}>Yearly <span className="text-[9px] bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded-full ml-1">SAVE 20%</span></span>
-            </div>
+      {/* 🚀 PREMIUM PRICING STRUCTURE (REPOSITIONED) */}
+      <section id="pricing" className="py-24 bg-white border-y border-slate-100">
+        <div className="container">
+          <div className="text-center mb-5">
+             <h2 className="text-[10px] font-extrabold uppercase text-primary tracking-[0.4em] mb-4">Investment Protocol</h2>
+             <p className="h2 fw-black text-dark tracking-tight mb-3">Flexible Plans for Every Stage of Your Institute’s Growth</p>
+             <p className="text-muted fw-bold lead mb-4">Choose a plan that scales with your students, teachers, and ambitions</p>
+             
+             {/* Billing Toggle (Bootstrap styling) */}
+             <div className="d-flex align-items-center justify-content-center gap-3 mb-5">
+                <span className={`small fw-black text-uppercase tracking-widest ${isMonthly ? 'text-dark' : 'text-muted'}`}>Monthly</span>
+                <div className="form-check form-switch p-0 m-0">
+                  <input 
+                    className="form-check-input ms-0 cursor-pointer" 
+                    type="checkbox" 
+                    role="switch" 
+                    checked={!isMonthly}
+                    onChange={() => setIsMonthly(!isMonthly)}
+                    style={{ width: '3.5rem', height: '1.75rem' }}
+                  />
+                </div>
+                <span className={`small fw-black text-uppercase tracking-widest ${!isMonthly ? 'text-primary' : 'text-muted'}`}>
+                  Yearly <span className="badge rounded-pill bg-success-subtle text-success ms-1">SAVE ₹₹₹</span>
+                </span>
+             </div>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="row g-4 align-items-stretch justify-content-center">
             {plans.map((plan, i) => (
-              <div 
-                key={i} 
-                className={cn(
-                  "relative p-10 rounded-[40px] border flex flex-col h-full transition-all duration-500",
-                  plan.highlight ? "bg-slate-950 text-white border-slate-900 shadow-2xl scale-[1.05] z-10" : "bg-white border-slate-100 shadow-xl hover:shadow-2xl"
-                )}
-              >
-                {plan.highlight && (
-                  <div className="absolute top-0 right-10 -translate-y-1/2 bg-primary-600 text-white text-[10px] font-extrabold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">Most Scalable</div>
-                )}
-                <h4 className="text-xl font-extrabold uppercase tracking-widest mb-2">{plan.name}</h4>
-                <p className={cn("text-sm font-bold mb-8", plan.highlight ? "text-slate-400" : "text-slate-500")}>{plan.desc}</p>
-                <div className="mb-10">
-                  <span className="text-4xl font-extrabold">₹{isMonthly ? plan.price.monthly : plan.price.yearly}</span>
-                  <span className={cn("text-xs font-bold uppercase ml-2", plan.highlight ? "text-slate-500" : "text-slate-400")}>/ month</span>
-                </div>
-                <ul className="space-y-4 mb-10 flex-1">
-                  {plan.features.map((feat, idx) => (
-                    <li key={idx} className="flex items-center gap-3 text-xs font-bold">
-                      <Icon name="check-circle-fill" className={cn("text-lg", plan.highlight ? "text-primary-400" : "text-primary-600")} />
-                      {feat}
-                    </li>
-                  ))}
-                </ul>
-                <Link 
-                  href="https://wa.me/919506933715"
-                  className={cn(
-                    "w-full py-5 rounded-2xl text-[11px] font-extrabold uppercase tracking-[0.2em] text-center transition-all btn-glow",
-                    plan.highlight ? "bg-primary-600 text-white shadow-primary-500/20" : "bg-slate-900 text-white shadow-slate-200"
-                  )}
+              <div key={plan.id} className="col-12 col-md-6 col-xl-3">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -15, scale: 1.02 }}
+                  viewport={{ once: true }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className={`card h-100 border-2 rounded-5 overflow-hidden transition-all duration-500 group ${plan.cardClass}`}
+                  style={{ 
+                    borderImage: plan.isPopular ? `linear-gradient(45deg, ${plan.color}, #ffffff) 1` : '',
+                    '--hover-color': plan.color,
+                    boxShadow: plan.isPopular ? `0 30px 60px ${plan.color}25` : ''
+                  } as React.CSSProperties}
                 >
-                  {plan.cta}
-                </Link>
+                  {plan.isPopular && (
+                    <div className="bg-primary text-white text-[10px] font-black uppercase tracking-widest text-center py-2">
+                      Most Popular
+                    </div>
+                  )}
+                  <div className="card-body p-4 p-xl-5 d-flex flex-col h-100">
+                    <h3 className="h5 fw-black text-uppercase tracking-widest mb-2" style={{ color: plan.color }}>{plan.name}</h3>
+                    <p className="small text-muted fw-bold mb-4" style={{ minHeight: '3rem' }}>{plan.sub}</p>
+                    
+                    <div className="mb-4">
+                      <div className="d-flex align-items-baseline gap-1">
+                        <span className="h1 fw-black text-dark mb-0">₹{isMonthly ? plan.price.monthly.toLocaleString() : (plan.price.yearly/12).toLocaleString()}</span>
+                        <span className="small text-muted fw-bold">/ Mo</span>
+                      </div>
+                      <p className="small text-primary fw-black text-uppercase tracking-widest mt-1">
+                        {isMonthly ? 'Billed monthly' : `₹${plan.price.yearly.toLocaleString()} Billed yearly`}
+                      </p>
+                    </div>
+
+                    <ul className="list-unstyled space-y-3 mb-5 flex-1">
+                      {plan.features.map((feat, idx) => (
+                        <li key={idx} className="d-flex align-items-center gap-3">
+                          <i className="bi bi-patch-check-fill fs-5" style={{ color: plan.color }} />
+                          <span className="small fw-bold text-secondary">{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="d-grid gap-3">
+                        <Link 
+                          href="/login" 
+                          className={`btn btn-lg rounded-4 fw-black text-uppercase tracking-widest text-[10px] py-4 shadow-sm ${plan.btnClass}`}
+                        >
+                          {plan.cta}
+                        </Link>
+                        
+                        <a 
+                          href={`https://wa.me/919506933715?text=Hello!%20I%20want%20to%20know%20more%20about%20the%20${plan.name}%20plan%20for%20my%20institute.`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-lg btn-outline-success rounded-4 fw-black text-uppercase tracking-widest text-[10px] py-3 d-flex align-items-center justify-content-center gap-2"
+                        >
+                          <i className="bi bi-whatsapp fs-5" />
+                          Chat with Us
+                        </a>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
             ))}
+          </div>
+
+          <div className="text-center mt-5">
+             <p className="h5 text-muted fw-black italic">
+               <Icon name="shield-check" className="text-success me-2" />
+               No setup fees. No hidden charges. Upgrade anytime as you grow.
+             </p>
           </div>
         </div>
       </section>
@@ -1107,79 +1207,6 @@ export default function LandingPage() {
          </div>
       </section>
 
-      {/* ── Pricing Section with Urgency ── */}
-      <section id="pricing" className="py-24 bg-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-[10px] font-extrabold uppercase text-primary-600 tracking-[0.4em] mb-4">Investment Plans</h2>
-            <p className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">Simple, Transparent Pricing</p>
-            <p className="text-slate-500 text-lg font-bold">No hidden charges. Start free, scale as you grow.</p>
-            
-            {/* ⚡ Urgency Tag */}
-            <div className="mt-8 inline-flex items-center gap-3 px-6 py-3 bg-orange-100 border border-orange-200 rounded-2xl shadow-xl animate-bounce">
-              <Icon name="lightning-charge-fill" className="text-orange-600 text-xl" />
-              <div className="text-left">
-                <p className="text-[10px] font-extrabold uppercase text-orange-600 tracking-widest leading-none mb-1">Limited Time Offer</p>
-                <p className="text-sm font-extrabold text-slate-900">Get FREE setup + customization if you book demo this week. <span className="text-orange-600">Only for first 10 institutes.</span></p>
-              </div>
-            </div>
-          </div>
-
-          <div className="-mx-6 px-6 overflow-x-auto scrollbar-hide md:overflow-visible md:mx-0 md:px-0">
-          <div className="flex gap-6 w-max md:w-auto md:grid md:grid-cols-3 items-center">
-            {plans.map((plan, i) => (
-              <motion.div
-                key={plan.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className={cn(
-                  "relative p-10 rounded-[50px] border transition-all duration-500 group w-[300px] md:w-auto flex-shrink-0",
-                  plan.highlight 
-                    ? "bg-slate-950 text-white border-slate-900 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)] md:scale-105 z-10" 
-                    : "bg-slate-50 border-slate-100 hover:bg-white hover:shadow-2xl hover:border-white"
-                )}
-              >
-                {plan.highlight && (
-                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary-600 text-white px-6 py-2 rounded-2xl text-[10px] font-extrabold uppercase tracking-widest shadow-2xl">
-                    Most Popular Choice
-                  </div>
-                )}
-                <h3 className={cn("text-xl font-extrabold uppercase tracking-widest mb-2", plan.highlight ? "text-primary-400" : "text-slate-900")}>{plan.name}</h3>
-                <p className={cn("text-xs font-bold mb-8", plan.highlight ? "text-slate-400" : "text-slate-500")}>{plan.desc}</p>
-                
-                <div className="flex items-baseline gap-2 mb-10">
-                  <span className="text-5xl font-extrabold tracking-tight">₹{plan.price.monthly.toLocaleString()}</span>
-                  <span className={cn("text-sm font-extrabold uppercase tracking-widest", plan.highlight ? "text-slate-600" : "text-slate-300")}>/ Mo</span>
-                </div>
-
-                <ul className="space-y-4 mb-12">
-                  {plan.features.map((feat, j) => (
-                    <li key={j} className="flex items-center gap-3">
-                      <Icon name="check-circle-fill" className={cn("text-lg", plan.highlight ? "text-primary-400" : "text-primary-600")} />
-                      <span className={cn("text-sm font-bold", plan.highlight ? "text-slate-300" : "text-slate-700")}>{feat}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <Link 
-                  href="https://wa.me/919506933715" 
-                  className={cn(
-                    "block w-full text-center py-5 rounded-2xl font-extrabold uppercase tracking-widest text-[11px] shadow-xl transition-all",
-                    plan.highlight 
-                      ? "bg-primary-600 text-white hover:bg-primary-500 shadow-primary-500/20" 
-                      : "bg-slate-900 text-white hover:bg-primary-600 shadow-slate-900/10"
-                  )}
-                >
-                  Acquire License
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── Final CTA Section ── */}
       <section className="py-32 bg-primary-600 text-white relative overflow-hidden text-center">

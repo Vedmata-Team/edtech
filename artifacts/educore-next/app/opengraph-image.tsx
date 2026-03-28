@@ -141,7 +141,7 @@ export default async function OGImage() {
               { val: '500+', label: 'Institutes' },
               { val: '10L+', label: 'Students' },
               { val: '4.8★', label: 'Rating' },
-              { val: '₹2999', label: 'Starting/mo' },
+              { val: '₹999', label: 'Starting/mo' },
             ].map((s, i) => (
               <div
                 key={i}

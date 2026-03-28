@@ -113,9 +113,13 @@ export const metadata: Metadata = {
     statusBarStyle: 'black-translucent',
   },
 
-  // ── Verification (add your codes here) ──
+  // ── Verification ──
   verification: {
-    google: 'your-google-site-verification-code',
+    google: 'GSC-VERIFICATION-CODE-REPLACE-ME',
+    other: {
+      'msvalidate.01': 'BING-VERIFICATION-CODE-REPLACE-ME',
+      'indexnow-key': '47a274db24924c88b991cd47895f32eb',
+    },
   },
 
   // ── Other ──
@@ -236,6 +240,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         />
         <link
           rel="stylesheet"

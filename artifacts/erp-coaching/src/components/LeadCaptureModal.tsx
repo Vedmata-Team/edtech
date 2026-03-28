@@ -87,6 +87,7 @@ export default function LeadCaptureModal() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={dismiss}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.92, y: 24 }}
@@ -94,18 +95,20 @@ export default function LeadCaptureModal() {
             exit={{ opacity: 0, scale: 0.92, y: 24 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="bg-white rounded-3xl shadow-2xl w-full max-w-sm relative overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
           >
             {/* Tricolor top bar */}
             <div className="h-1.5 w-full bg-gradient-to-r from-[#FF9933] via-white to-[#138808]" />
 
+            <button
+              onClick={dismiss}
+              className="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
+              aria-label="Close"
+            >
+              <X size={15} />
+            </button>
+
             <div className="p-6">
-              <button
-                onClick={dismiss}
-                className="absolute top-4 right-4 p-1.5 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
-                aria-label="Close"
-              >
-                <X size={15} />
-              </button>
 
               {!submitted ? (
                 <>

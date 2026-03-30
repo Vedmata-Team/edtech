@@ -86,16 +86,16 @@ export default function LeadCaptureModal() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-          onClick={dismiss}
+          className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={(e) => { if (e.target === e.currentTarget) dismiss(); }}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.92, y: 24 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 24 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-white rounded-3xl shadow-2xl w-full max-w-sm relative overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-3xl shadow-2xl w-full max-w-sm relative overflow-hidden flex flex-col max-h-[52vh] sm:max-h-[90vh]"
+            onClick={dismiss}
           >
             {/* Tricolor top bar */}
             <div className="h-1.5 w-full bg-gradient-to-r from-[#FF9933] via-white to-[#138808]" />
@@ -108,7 +108,7 @@ export default function LeadCaptureModal() {
               <X size={15} />
             </button>
 
-            <div className="p-6">
+            <div className="p-6 overflow-y-auto flex-1">
 
               {!submitted ? (
                 <>
@@ -137,6 +137,7 @@ export default function LeadCaptureModal() {
                     className="space-y-2.5"
                     data-netlify="true"
                     data-netlify-honeypot="bot-field"
+                    onClick={(e) => e.stopPropagation()}
                   >
                     <input type="hidden" name="form-name" value="educore-leads" />
                     <input type="hidden" name="bot-field" />

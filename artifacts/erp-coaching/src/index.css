@@ -236,6 +236,14 @@
     animation: slide-in-right 0.5s ease-out forwards;
   }
 
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: marquee 18s linear infinite;
+  }
+
   .text-gradient {
     background: linear-gradient(135deg, #2563EB 0%, #38BDF8 50%, #1E40AF 100%);
     -webkit-background-clip: text;

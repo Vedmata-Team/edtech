@@ -4,6 +4,7 @@ import './globals.css'
 import { AuthProvider } from '@/components/providers/AuthProvider'
 import { TopStrip } from '@/components/layout/TopStrip'
 import { GlobalHeader } from '@/components/layout/GlobalHeader'
+import { cn } from '@/lib/utils'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -250,7 +251,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
         />
       </head>
-      <body className={poppins.className} suppressHydrationWarning>
+      <body className={cn(poppins.className, "overflow-x-hidden")} suppressHydrationWarning>
         <AuthProvider>
           <div className="relative flex flex-col min-h-screen">
             <TopStrip />

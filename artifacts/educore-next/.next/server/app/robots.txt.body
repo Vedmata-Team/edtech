@@ -1,0 +1,9 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /management/
+Disallow: /student/
+Disallow: /teacher/
+Disallow: /admin/
+
+Sitemap: https://educore.app/sitemap.xml

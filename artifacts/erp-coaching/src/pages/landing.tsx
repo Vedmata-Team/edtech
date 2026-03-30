@@ -49,10 +49,21 @@ function AnnouncementStrip() {
   const [visible, setVisible] = useState(true);
   if (!visible) return null;
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-[#FF9933] via-white to-[#138808] text-[#0F172A] text-xs font-semibold flex items-center justify-center gap-2 px-4 py-2">
-      <span>🇮🇳</span>
-      <span className="text-center text-[#0F172A]">Bharat ka #1 Coaching ERP — AI-powered doubt resolution ab live hai! <a href="#features" className="underline font-bold ml-1 text-blue-700">Explore now →</a></span>
-      <button onClick={() => setVisible(false)} aria-label="Dismiss" className="ml-2 p-0.5 hover:opacity-70 shrink-0"><X className="w-3.5 h-3.5" /></button>
+    <div className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-[#FF9933] via-white to-[#138808] text-[#0F172A] text-xs font-semibold flex items-center py-2 pr-8 overflow-hidden">
+      {/* Mobile: scrolling marquee */}
+      <div className="flex sm:hidden flex-1 overflow-hidden">
+        <div className="flex animate-marquee whitespace-nowrap gap-16">
+          <span>🇮🇳 Bharat ka #1 Coaching ERP — AI-powered doubt resolution ab live hai! <a href="#features" className="underline font-bold text-blue-700">Explore now →</a></span>
+          <span>🇮🇳 Bharat ka #1 Coaching ERP — AI-powered doubt resolution ab live hai! <a href="#features" className="underline font-bold text-blue-700">Explore now →</a></span>
+        </div>
+      </div>
+      {/* Desktop: static centered */}
+      <span className="hidden sm:flex flex-1 justify-center gap-2">
+        <span>🇮🇳</span>
+        Bharat ka #1 Coaching ERP — AI-powered doubt resolution ab live hai!
+        <a href="#features" className="underline font-bold ml-1 text-blue-700">Explore now →</a>
+      </span>
+      <button onClick={() => setVisible(false)} aria-label="Dismiss" className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 hover:opacity-70 shrink-0"><X className="w-3.5 h-3.5" /></button>
     </div>
   );
 }

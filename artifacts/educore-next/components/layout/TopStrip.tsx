@@ -4,7 +4,7 @@ import React from 'react'
 
 export const TopStrip = () => {
   return (
-    <div className="sticky top-0 z-[110] bg-slate-950 text-white border-b border-white/5 overflow-hidden py-1.5 px-4 text-center">
+    <div className="fixed top-0 w-full z-[110] bg-slate-950 text-white border-b border-white/5 overflow-hidden h-8 flex items-center justify-center px-4">
       <div className="relative z-10 flex items-center justify-center gap-3 md:gap-6">
         <div className="flex items-center gap-1.5 px-2 py-0.5 bg-white/5 rounded-md border border-white/10">
           <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />

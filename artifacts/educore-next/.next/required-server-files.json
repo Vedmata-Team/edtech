@@ -99,7 +99,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "e:\\Divy\\Projects\\Netlify\\Git\\edtech",
+    "outputFileTracingRoot": "E:\\Divy\\Projects\\Netlify\\Git\\edtech",
     "experimental": {
       "useSkewCookie": false,
       "cacheLife": {
@@ -290,10 +290,10 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
     "turbopack": {
-      "root": "e:\\Divy\\Projects\\Netlify\\Git\\edtech"
+      "root": "E:\\Divy\\Projects\\Netlify\\Git\\edtech"
     }
   },
-  "appDir": "e:\\Divy\\Projects\\Netlify\\Git\\edtech\\artifacts\\educore-next",
+  "appDir": "E:\\Divy\\Projects\\Netlify\\Git\\edtech\\artifacts\\educore-next",
   "relativeAppDir": "artifacts\\educore-next",
   "files": [
     ".next\\routes-manifest.json",
@@ -316,6 +316,6 @@
     ".next\\required-server-files.json"
   ],
   "ignore": [
-    "node_modules\\next\\dist\\compiled\\@ampproject\\toolbox-optimizer\\**\\*"
+    "..\\..\\node_modules\\.pnpm\\next@15.5.14_react-dom@19.1.0_react@19.1.0__react@19.1.0\\node_modules\\next\\dist\\compiled\\@ampproject\\toolbox-optimizer\\**\\*"
   ]
 }

@@ -83,20 +83,20 @@ export const PopupForm = () => {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative w-full max-w-lg bg-white rounded-[40px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden border border-white/20"
+            className="relative w-full max-w-lg max-h-[85vh] overflow-y-auto scrollbar-hide bg-white rounded-[32px] md:rounded-[40px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-white/20"
           >
             {/* Close */}
             <button
               onClick={handleClose}
-              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-slate-200 hover:text-slate-900 transition-all z-10"
+              className="absolute top-4 right-4 md:top-6 md:right-6 w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-slate-200 hover:text-slate-900 transition-all z-20"
               aria-label="Close"
             >
               <i className="bi bi-x-lg text-sm" />
             </button>
 
             {/* Banner */}
-            <div className="relative h-48 overflow-hidden bg-slate-900 p-8 flex flex-col justify-center">
-              <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+            <div className="relative h-32 md:h-48 overflow-hidden bg-slate-900 p-6 md:p-8 flex flex-col justify-center">
+              <div className="absolute top-0 right-0 p-6 md:p-8 opacity-10 pointer-events-none">
                 <i className="bi bi-patch-check-fill text-[120px] text-primary-400" />
               </div>
               <div className="relative z-10">
@@ -106,7 +106,7 @@ export const PopupForm = () => {
                     Live Offer: Save 20% Today
                   </span>
                 </div>
-                <h3 className="text-2xl font-black text-white tracking-tight leading-tight">
+                <h3 className="text-xl md:text-2xl font-black text-white tracking-tight leading-tight">
                   Transform Your Institute<br />
                   Into a <span className="text-primary-400">Digital Powerhouse.</span>
                 </h3>
@@ -114,26 +114,26 @@ export const PopupForm = () => {
             </div>
 
             {/* Body */}
-            <div className="p-8">
+            <div className="p-6 md:p-8">
               {isSubmitted ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center justify-center py-10 text-center"
+                  className="flex flex-col items-center justify-center py-6 md:py-10 text-center"
                 >
                   <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-4xl mb-6 shadow-xl">
                     <i className="bi bi-check-lg" />
                   </div>
-                  <h4 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-2">
+                  <h4 className="text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight mb-2">
                     Request Received! 🎉
                   </h4>
-                  <p className="text-slate-500 font-bold">
+                  <p className="text-xs md:text-sm text-slate-500 font-bold">
                     Our team will contact you on WhatsApp shortly.
                   </p>
                 </motion.div>
               ) : (
                 <>
-                  <p className="text-slate-500 font-bold mb-6 leading-relaxed">
+                  <p className="text-slate-500 text-xs md:text-sm font-bold mb-5 leading-relaxed">
                     Get a <span className="text-slate-900">Custom Automation Audit</span> and
                     14-day free trial of EduCore OS.
                   </p>
@@ -165,7 +165,7 @@ export const PopupForm = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        className="w-full pl-12 pr-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold placeholder:text-slate-400 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none"
+                        className="w-full pl-12 pr-6 py-3 md:py-4 bg-slate-50 border border-slate-100 rounded-2xl text-[13px] md:text-sm font-bold placeholder:text-slate-400 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none"
                       />
                     </div>
 
@@ -183,7 +183,7 @@ export const PopupForm = () => {
                           setError('')
                         }}
                         required
-                        className="w-full pl-12 pr-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold placeholder:text-slate-400 focus:bg-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all outline-none"
+                        className="w-full pl-12 pr-6 py-3 md:py-4 bg-slate-50 border border-slate-100 rounded-2xl text-[13px] md:text-sm font-bold placeholder:text-slate-400 focus:bg-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all outline-none"
                       />
                     </div>
 
@@ -195,7 +195,7 @@ export const PopupForm = () => {
                         name="institute_type"
                         value={instituteType}
                         onChange={(e) => setInstituteType(e.target.value)}
-                        className="w-full pl-12 pr-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold appearance-none focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none text-slate-900"
+                        className="w-full pl-12 pr-6 py-3 md:py-4 bg-slate-50 border border-slate-100 rounded-2xl text-[13px] md:text-sm font-bold appearance-none focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none text-slate-900"
                       >
                         <option>Coaching Center</option>
                         <option>K-12 School</option>
@@ -216,7 +216,7 @@ export const PopupForm = () => {
                       type="submit"
                       disabled={isSubmitting}
                       className={cn(
-                        'w-full py-5 bg-slate-950 text-white font-extrabold uppercase tracking-[0.2em] text-[11px] rounded-2xl shadow-xl transition-all btn-glow shadow-slate-900/20 relative overflow-hidden',
+                        'w-full py-4 md:py-5 bg-slate-950 text-white font-extrabold uppercase tracking-[0.2em] text-[10px] md:text-[11px] rounded-2xl shadow-xl transition-all btn-glow shadow-slate-900/20 relative overflow-hidden mt-2',
                         isSubmitting ? 'bg-slate-800 cursor-not-allowed' : 'hover:bg-primary-600 hover:shadow-primary-500/30'
                       )}
                     >

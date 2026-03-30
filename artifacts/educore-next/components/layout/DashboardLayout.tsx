@@ -57,7 +57,7 @@ export default function DashboardLayout({ children, role, title }: DashboardLayo
     <div className="min-h-screen bg-background flex pt-[104px]">
       <Sidebar role={role} className="mt-[104px] h-[calc(100vh-104px)]" />
 
-      <div className="flex-1 lg:ml-64 min-h-[calc(100vh-104px)] pb-20 lg:pb-0 flex flex-col">
+      <div className="flex-1 min-w-0 w-full overflow-x-hidden lg:ml-64 min-h-[calc(100vh-104px)] pb-20 lg:pb-0 flex flex-col">
         <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-100 h-14 flex items-center px-4 sm:px-6 gap-3 shadow-sm">
           <div className="flex-1 min-w-0">
             {title && <h1 className="text-sm font-bold text-foreground truncate">{title}</h1>}

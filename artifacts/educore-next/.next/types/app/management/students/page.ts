@@ -1,4 +1,4 @@
-// File: e:\Divy\Projects\Netlify\Git\edtech\artifacts\educore-next\app\management\students\page.tsx
+// File: E:\Divy\Projects\Netlify\Git\edtech\artifacts\educore-next\app\management\students\page.tsx
 import * as entry from '../../../../../app/management/students/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

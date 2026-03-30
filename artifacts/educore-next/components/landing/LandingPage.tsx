@@ -397,44 +397,29 @@ export default function LandingPage() {
               </div>
               
               <h1 className="text-4xl lg:text-[52px] font-black text-slate-950 tracking-tight mb-8 leading-[1.1]">
-                Run Your Entire{' '}
-                <span className="text-emerald-500">School</span> or<br />
-                <span className="text-orange-500">Coaching Institute</span> on One<br />
-                <span className="text-primary-600">Smart Platform.</span>
+                India’s Smart<br />
+                <span className="text-primary-600">Coaching Management</span> Platform.
               </h1>
               
               <p className="text-slate-500 text-lg md:text-xl font-bold leading-relaxed mb-10 max-w-xl">
-                Students, Teachers & Management — Together on the only OS built for high-performance Bharat.
+                Run your coaching, track students & automate fees — all in one place.
               </p>
 
-              <div className="flex flex-col sm:flex-row flex-wrap items-center gap-3 mb-12">
+              <div className="flex flex-col sm:flex-row flex-wrap items-center gap-4 mb-12">
                 <motion.div
                   animate={{ scale: [1, 1.04, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
+                  className="w-full sm:w-auto"
                 >
                   <Link
                     href="/login"
-                    className="group relative px-7 py-4 bg-slate-900 text-white font-extrabold uppercase tracking-[0.18em] text-[10px] rounded-2xl shadow-xl hover:bg-primary-600 transition-all flex items-center gap-2.5 overflow-hidden"
+                    className="group relative w-full sm:w-auto px-8 py-5 bg-primary-600 text-white font-extrabold uppercase tracking-[0.18em] text-[11px] rounded-2xl shadow-[0_20px_40px_-15px_rgba(37,99,235,0.5)] hover:bg-primary-700 transition-all flex items-center justify-center gap-2.5 overflow-hidden"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                    <Icon name="speedometer2" className="text-base" />
-                    Admin Demo
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                    <Icon name="rocket-takeoff-fill" className="text-lg" />
+                    Start Free Demo
                   </Link>
                 </motion.div>
-                <Link
-                  href="/login"
-                  className="px-7 py-4 bg-primary-600 text-white font-extrabold uppercase tracking-[0.18em] text-[10px] rounded-2xl shadow-xl hover:bg-primary-700 transition-all flex items-center gap-2.5"
-                >
-                  <Icon name="person-workspace" className="text-base" />
-                  Teacher Demo
-                </Link>
-                <Link
-                  href="/login"
-                  className="px-7 py-4 bg-blue-600 text-white font-extrabold uppercase tracking-[0.18em] text-[10px] rounded-2xl shadow-xl hover:bg-blue-700 transition-all flex items-center gap-2.5"
-                >
-                  <Icon name="mortarboard" className="text-base" />
-                  Student Demo
-                </Link>
               </div>
 
               {/* Trust Badges */}
@@ -481,6 +466,33 @@ export default function LandingPage() {
               </motion.div>
             </motion.div>
 
+          </div>
+        </div>
+      </section>
+
+      {/* 🚀 2. "See how your coaching will look in 2 minutes" Section */}
+      <section className="py-20 bg-white border-y border-slate-100 overflow-hidden text-center">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-full mb-6 border border-emerald-100">
+             <Icon name="lightning-charge-fill" className="text-emerald-500" />
+             <span className="text-[10px] font-extrabold uppercase tracking-widest">Instant Preview</span>
+          </div>
+          <p className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight mb-12">
+            See how your coaching will look in <span className="text-primary-600 underline decoration-primary-600/20 underline-offset-8">2 minutes</span>
+          </p>
+          
+          <div className="relative mx-auto max-w-5xl rounded-3xl md:rounded-[40px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] bg-slate-900 border-[4px] md:border-[8px] border-slate-900 overflow-hidden group cursor-pointer hover:scale-[1.02] transition-transform duration-500">
+             <div className="absolute top-0 left-0 right-0 h-6 md:h-10 bg-slate-800 flex items-center gap-1.5 md:gap-2 px-4 md:px-6 z-20">
+                <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-red-500" />
+                <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-amber-500" />
+                <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-emerald-500" />
+             </div>
+             <img src="/images/management_preview.png" alt="Demo Dashboard Preview" className="w-full mt-6 md:mt-10 object-cover" />
+             <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <Link href="/login" className="px-6 py-3 md:px-10 md:py-5 bg-primary-600 text-white rounded-xl md:rounded-2xl font-black uppercase tracking-widest text-[10px] md:text-xs flex items-center gap-2 md:gap-3 shadow-2xl hover:scale-105 transition-transform">
+                   <Icon name="lightning-charge-fill" /> Explore Dashboard
+                </Link>
+             </div>
           </div>
         </div>
       </section>
@@ -1207,6 +1219,32 @@ export default function LandingPage() {
          </div>
       </section>
 
+
+      {/* ❓ FAQ Section */}
+      <section className="py-24 bg-slate-50 border-t border-slate-100">
+         <div className="max-w-4xl mx-auto px-6">
+            <div className="text-center mb-16">
+               <h2 className="text-[10px] font-extrabold uppercase text-primary-600 tracking-[0.4em] mb-4">Got Questions?</h2>
+               <p className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">Frequently Asked Questions</p>
+            </div>
+            <div className="space-y-4">
+               {[
+                 { q: 'How long does it take to setup?', a: 'Your branded ecosystem will be live on your custom domain within 3-5 working days. Our team handles the complete technical onboarding.' },
+                 { q: 'Do you provide a custom domain and app?', a: 'Yes! Your web portal runs on your custom domain, and mobile apps are white-labeled with your institute\'s name and logo on the Play Store.' },
+                 { q: 'Is there a limit on teachers or batches?', a: 'No limits on teachers, batches, or storage in our Pro and Enterprise plans. Focus on growth, we handle the scale.' },
+                 { q: 'How does the automated fee collection work?', a: 'The system automatically tracks due dates and sends WhatsApp & SMS reminders with direct payment links. Payments are automatically reconciled in your dashboard.' },
+               ].map((faq, i) => (
+                 <div key={i} className="p-6 md:p-8 bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                    <h4 className="text-lg font-extrabold text-slate-900 mb-2 flex items-center gap-3">
+                       <Icon name="question-circle-fill" className="text-primary-600" />
+                       {faq.q}
+                    </h4>
+                    <p className="text-slate-500 font-bold ml-8">{faq.a}</p>
+                 </div>
+               ))}
+            </div>
+         </div>
+      </section>
 
       {/* ── Final CTA Section ── */}
       <section className="py-32 bg-primary-600 text-white relative overflow-hidden text-center">

@@ -50,7 +50,7 @@ export const PopupForm = () => {
         institute_type: instituteType,
       })
 
-      const res = await fetch('/', {
+      const res = await fetch('/netlify-forms.html', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: body.toString(),
@@ -147,6 +147,7 @@ export const PopupForm = () => {
                     onSubmit={handleSubmit}
                     className="space-y-4"
                     name="educore-demo-request"
+                    method="POST"
                     data-netlify="true"
                     data-netlify-honeypot="bot-field"
                   >

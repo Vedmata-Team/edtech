@@ -50,7 +50,7 @@ export default function LeadCaptureModal() {
 
     try {
       const body = new URLSearchParams({
-        "form-name": "educore-leads",
+        "form-name": "educore-demo-request",
         "bot-field": "",
         name,
         institute,
@@ -59,7 +59,7 @@ export default function LeadCaptureModal() {
         role: role || "Not selected",
       });
 
-      await fetch("/", {
+      await fetch("/index.html", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: body.toString(),
@@ -132,14 +132,15 @@ export default function LeadCaptureModal() {
                   </div>
 
                   <form
-                    name="educore-leads"
+                    name="educore-demo-request"
+                    method="POST"
                     onSubmit={handleSubmit}
                     className="space-y-2.5"
                     data-netlify="true"
                     data-netlify-honeypot="bot-field"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <input type="hidden" name="form-name" value="educore-leads" />
+                    <input type="hidden" name="form-name" value="educore-demo-request" />
                     <input type="hidden" name="bot-field" />
 
                     <input
